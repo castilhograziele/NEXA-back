@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Bar; // <- IMPORTANTE
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     protected $fillable = [
         'name',
@@ -33,8 +35,16 @@ class User extends Authenticatable
         ];
     }
 
+    // um usuário pode ter um bar
     public function bar(): HasOne
     {
         return $this->hasOne(Bar::class);
+    }
+
+    // eventos que o usuário se inscreveu
+    public function subscribedEvents(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'event_subscriptions')
+                    ->withTimestamps();
     }
 }

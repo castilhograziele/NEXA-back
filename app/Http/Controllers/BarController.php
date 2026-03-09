@@ -2,49 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Bar;
+use App\Services\BarService;
+use App\Http\Requests\Bar\StoreBarRequest;
+use App\Http\Requests\Bar\UpdateBarRequest;
+use Illuminate\Http\JsonResponse;
 
+/**
+ * @group Bars
+ *
+ * Endpoints para cadastro e gestão de bares.
+ */
 class BarController extends Controller
 {
-    //exibe o formulário de cadastro do bar
-    //rota bar/create
-    public function create()
+    public function __construct(private BarService $barService) {}
+
+    /**
+     * Cadastrar bar
+     *
+     * Cria um novo bar vinculado ao usuário autenticado.
+     * Apenas usuários com role bar_owner podem cadastrar um bar.
+     */
+    public function store(StoreBarRequest $request): JsonResponse
     {
-        //retorna a view onde o dono do bar cadastra o bar
-        return view('bar.create');
+        $bar = $this->barService->store($request->user(), $request->validated());
+
+        return response()->json([
+            'success' => true,
+            'data'    => $bar,
+            'message' => 'Bar cadastrado com sucesso.',
+        ], 201);
     }
 
-    //processa o envio do formulário de cadastro do bar
-    //rota POST
-    public function store(Request $request)
+    /**
+     * Detalhes do bar
+     *
+     * Retorna os dados de um bar específico.
+     *
+     * @unauthenticated
+     */
+    public function show(Bar $bar): JsonResponse
     {
-        //Recupera o usuário atualmente autenticado
-        $user = auth()->user();
-
-        //regra: um usuário só pode ter um único bar cadastrado (CNPJ)
-        if ($user->bar) {
-            //se ja tem bar, retorna
-            return back()->with('error', 'Você já possui um bar cadastrado.');
-        }
-
-        if (Bar::where('cnpj', $request->cnpj)->exists()) {
-            //não deixa duplicar cnpj
-            return back()->with('error', 'Este CNPJ já está cadastrado.');
-        }
-
-        //bar criado no banco de dados
-        Bar::create([
-            //relacionamento usuario = bar
-            'user_id' => $user->id,
-            'name' => $request->name,
-            'cnpj' => $request->cnpj,
+        return response()->json([
+            'success' => true,
+            'data'    => $bar,
+            'message' => '',
         ]);
-
-        //após realizar o cadastro, redireciona para a dashboard
-        return redirect('/dashboard')
-            ->with('success', 'Bar cadastrado com sucesso!');
     }
 
-    //pronto para cadastro de eventos
+    /**
+     * Atualizar bar
+     *
+     * Atualiza os dados do bar. Apenas o dono pode editar.
+     */
+    public function update(UpdateBarRequest $request, Bar $bar): JsonResponse
+    {
+        $bar = $this->barService->update($bar, $request->validated());
+
+        return response()->json([
+            'success' => true,
+            'data'    => $bar,
+            'message' => 'Bar atualizado com sucesso.',
+        ]);
+    }
 }

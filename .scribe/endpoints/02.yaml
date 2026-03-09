@@ -1,0 +1,137 @@
+name: Inscrições
+description: |-
+
+  Endpoints para inscrição e cancelamento em eventos.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me/subscriptions
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Minhas inscrições'
+      description: 'Retorna a lista paginada de eventos em que o usuário está inscrito.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/events/{event_id}/subscribe'
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Inscrever em evento'
+      description: 'Inscreve o usuário autenticado em um evento.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/events/{event_id}/subscribe'
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cancelar inscrição'
+      description: 'Cancela a inscrição do usuário autenticado em um evento.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
