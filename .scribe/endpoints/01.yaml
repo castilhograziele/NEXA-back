@@ -17,7 +17,9 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Listar eventos'
-      description: 'Retorna a lista paginada de eventos ativos com filtros opcionais.'
+      description: |-
+        Retorna a lista paginada de eventos ativos com filtros opcionais.
+        Use o filtro date com a data de hoje para obter os eventos "Esta noite".
       authenticated: false
       deprecated: false
     headers:
@@ -70,7 +72,51 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":{"current_page":1,"data":[{"id":1,"bar_id":1,"title":"Show de Samba","description":"Uma noite incr\u00edvel de samba ao vivo","event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-08T20:34:14.000000Z","updated_at":"2026-03-08T20:34:14.000000Z","bar":{"id":1,"user_id":2,"name":"Bar do Teste","cnpj":"12345678000195","phone":"54999999999","city":"Porto Alegre","address":"Rua Teste, 123","instagram":"@bardoteste","description":"Descri\u00e7\u00e3o atualizada do bar","created_at":"2026-03-08T20:18:56.000000Z","updated_at":"2026-03-08T20:22:32.000000Z"}}],"first_page_url":"http:\/\/localhost:8000\/api\/events?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events","per_page":10,"prev_page_url":null,"to":1,"total":1},"message":""}'
+        content: '{"success":true,"data":{"current_page":1,"data":[{"id":1,"bar_id":1,"title":"Show de Samba","description":"Uma noite incr\u00edvel de samba ao vivo","event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-08T20:34:14.000000Z","updated_at":"2026-03-09T22:32:40.000000Z","is_featured":true,"spotify_url":null,"bar":{"id":1,"user_id":2,"name":"Bar do Teste","cnpj":"12345678000195","phone":"54999999999","city":"Porto Alegre","address":"Rua Teste, 123","instagram":"@bardoteste","description":"Descri\u00e7\u00e3o atualizada do bar","created_at":"2026-03-08T20:18:56.000000Z","updated_at":"2026-03-09T22:58:36.000000Z","plan":"free","whatsapp":null}}],"first_page_url":"http:\/\/localhost:8000\/api\/events?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events","per_page":10,"prev_page_url":null,"to":1,"total":1},"message":""}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/events/featured
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Eventos em destaque'
+      description: |-
+        Retorna eventos marcados como destaque por bares com plano premium.
+        Usado para a seção "Não pode perder".
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"current_page":1,"data":[{"id":1,"bar_id":1,"title":"Show de Samba","description":"Uma noite incr\u00edvel de samba ao vivo","event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-08T20:34:14.000000Z","updated_at":"2026-03-09T22:32:40.000000Z","is_featured":true,"spotify_url":null,"bar":{"id":1,"user_id":2,"name":"Bar do Teste","cnpj":"12345678000195","phone":"54999999999","city":"Porto Alegre","address":"Rua Teste, 123","instagram":"@bardoteste","description":"Descri\u00e7\u00e3o atualizada do bar","created_at":"2026-03-08T20:18:56.000000Z","updated_at":"2026-03-09T22:58:36.000000Z","plan":"free","whatsapp":null}}],"first_page_url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events\/featured","per_page":10,"prev_page_url":null,"to":1,"total":1},"message":""}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -124,7 +170,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":"Uma noite incr\u00edvel de samba ao vivo","event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-08T20:34:14.000000Z","updated_at":"2026-03-08T20:34:14.000000Z","bar":{"id":1,"user_id":2,"name":"Bar do Teste","cnpj":"12345678000195","phone":"54999999999","city":"Porto Alegre","address":"Rua Teste, 123","instagram":"@bardoteste","description":"Descri\u00e7\u00e3o atualizada do bar","created_at":"2026-03-08T20:18:56.000000Z","updated_at":"2026-03-08T20:22:32.000000Z"}},"message":""}'
+        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":"Uma noite incr\u00edvel de samba ao vivo","event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-08T20:34:14.000000Z","updated_at":"2026-03-09T22:32:40.000000Z","is_featured":true,"spotify_url":null,"bar":{"id":1,"user_id":2,"name":"Bar do Teste","cnpj":"12345678000195","phone":"54999999999","city":"Porto Alegre","address":"Rua Teste, 123","instagram":"@bardoteste","description":"Descri\u00e7\u00e3o atualizada do bar","created_at":"2026-03-08T20:18:56.000000Z","updated_at":"2026-03-09T22:58:36.000000Z","plan":"free","whatsapp":null}},"message":""}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -152,6 +198,7 @@ endpoints:
       description: |-
         Cria um novo evento vinculado ao bar do usuário autenticado.
         Apenas usuários com role bar_owner podem criar eventos.
+        Apenas bares com plano premium podem marcar is_featured como true.
       authenticated: false
       deprecated: false
     headers:
@@ -228,6 +275,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -235,6 +304,8 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
+      is_featured: true
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
     fileParameters: []
     responses: []
     responseFields: []
@@ -256,7 +327,9 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Atualizar evento'
-      description: 'Atualiza os dados de um evento. Apenas o dono do bar pode editar.'
+      description: |-
+        Atualiza os dados de um evento. Apenas o dono do bar pode editar.
+        Apenas bares com plano premium podem marcar is_featured como true.
       authenticated: false
       deprecated: false
     headers:
@@ -345,6 +418,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -352,6 +447,8 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
+      is_featured: true
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
     fileParameters: []
     responses: []
     responseFields: []
@@ -462,6 +559,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -469,6 +588,8 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
+      is_featured: true
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
     fileParameters: []
     responses: []
     responseFields: []

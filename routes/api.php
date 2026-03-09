@@ -14,8 +14,9 @@ Route::prefix('auth')->group(function () {
 });
 
 // Rotas públicas de eventos — qualquer visitante pode ver
-Route::get('/events',         [EventController::class, 'index']);
-Route::get('/events/{event}', [EventController::class, 'show']);
+Route::get('/events',          [EventController::class, 'index']);
+Route::get('/events/featured', [EventController::class, 'featured']);
+Route::get('/events/{event}',  [EventController::class, 'show']);
 
 // Rotas protegidas — exigem token Sanctum
 Route::middleware('auth:sanctum')->group(function () {
@@ -24,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Histórico de inscrições do usuário
     Route::get('/me/subscriptions', [EventSubscriptionController::class, 'mySubscriptions']);
+
+    // Métricas — apenas bar_owner
+    Route::get('/metrics/bar',            [MetricsController::class, 'barMetrics']);
+    Route::get('/metrics/events/{event}', [MetricsController::class, 'eventMetrics']);
 
     // Rotas de bars
     Route::post('/bars',      [BarController::class, 'store']);
@@ -38,8 +43,4 @@ Route::middleware('auth:sanctum')->group(function () {
     // Inscrições em eventos
     Route::post('/events/{event}/subscribe',   [EventSubscriptionController::class, 'subscribe']);
     Route::delete('/events/{event}/subscribe', [EventSubscriptionController::class, 'unsubscribe']);
-
-    // Métricas — apenas bar_owner
-    Route::get('/metrics/bar',              [MetricsController::class, 'barMetrics']);
-    Route::get('/metrics/events/{event}',   [MetricsController::class, 'eventMetrics']);
 });

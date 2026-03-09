@@ -109,6 +109,9 @@
                                                     <li class="tocify-item level-2" data-unique="events-GETapi-events">
                                 <a href="#events-GETapi-events">Listar eventos</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="events-GETapi-events-featured">
+                                <a href="#events-GETapi-events-featured">Eventos em destaque</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="events-GETapi-events--event_id-">
                                 <a href="#events-GETapi-events--event_id-">Detalhes do evento</a>
                             </li>
@@ -758,6 +761,7 @@ Apenas usuários com role bar_owner podem cadastrar um bar.</p>
     \"city\": \"Passo Fundo\",
     \"address\": \"Rua Morom, 123\",
     \"instagram\": \"@bardoze\",
+    \"whatsapp\": \"54999999999\",
     \"description\": \"O melhor bar da cidade!\"
 }"
 </code></pre></div>
@@ -780,6 +784,7 @@ let body = {
     "city": "Passo Fundo",
     "address": "Rua Morom, 123",
     "instagram": "@bardoze",
+    "whatsapp": "54999999999",
     "description": "O melhor bar da cidade!"
 };
 
@@ -936,6 +941,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Perfil do Instagram do bar. Must not be greater than 255 characters. Example: <code>@bardoze</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>whatsapp</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="whatsapp"                data-endpoint="POSTapi-bars"
+               value="54999999999"
+               data-component="body">
+    <br>
+<p>Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters. Example: <code>54999999999</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
@@ -1113,6 +1130,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"city\": \"Passo Fundo\",
     \"address\": \"Rua Morom, 123\",
     \"instagram\": \"@bardoze\",
+    \"whatsapp\": \"54999999999\",
     \"description\": \"O melhor bar da cidade!\"
 }"
 </code></pre></div>
@@ -1134,6 +1152,7 @@ let body = {
     "city": "Passo Fundo",
     "address": "Rua Morom, 123",
     "instagram": "@bardoze",
+    "whatsapp": "54999999999",
     "description": "O melhor bar da cidade!"
 };
 
@@ -1293,6 +1312,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Perfil do Instagram do bar. Must not be greater than 255 characters. Example: <code>@bardoze</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>whatsapp</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="whatsapp"                data-endpoint="PUTapi-bars--bar_id-"
+               value="54999999999"
+               data-component="body">
+    <br>
+<p>Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters. Example: <code>54999999999</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
@@ -1315,7 +1346,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Retorna a lista paginada de eventos ativos com filtros opcionais.</p>
+<p>Retorna a lista paginada de eventos ativos com filtros opcionais.
+Use o filtro date com a data de hoje para obter os eventos "Esta noite".</p>
 
 <span id="example-requests-GETapi-events">
 <blockquote>Example request:</blockquote>
@@ -1382,7 +1414,9 @@ access-control-allow-origin: *
                 &quot;category&quot;: &quot;samba&quot;,
                 &quot;is_active&quot;: true,
                 &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
+                &quot;is_featured&quot;: true,
+                &quot;spotify_url&quot;: null,
                 &quot;bar&quot;: {
                     &quot;id&quot;: 1,
                     &quot;user_id&quot;: 2,
@@ -1394,7 +1428,9 @@ access-control-allow-origin: *
                     &quot;instagram&quot;: &quot;@bardoteste&quot;,
                     &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
                     &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
-                    &quot;updated_at&quot;: &quot;2026-03-08T20:22:32.000000Z&quot;
+                    &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
+                    &quot;plan&quot;: &quot;free&quot;,
+                    &quot;whatsapp&quot;: null
                 }
             }
         ],
@@ -1543,6 +1579,199 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                 </form>
 
+                    <h2 id="events-GETapi-events-featured">Eventos em destaque</h2>
+
+<p>
+</p>
+
+<p>Retorna eventos marcados como destaque por bares com plano premium.
+Usado para a seção "Não pode perder".</p>
+
+<span id="example-requests-GETapi-events-featured">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/events/featured" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/featured"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-events-featured">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;data&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;bar_id&quot;: 1,
+                &quot;title&quot;: &quot;Show de Samba&quot;,
+                &quot;description&quot;: &quot;Uma noite incr&iacute;vel de samba ao vivo&quot;,
+                &quot;event_date&quot;: &quot;2026-04-15&quot;,
+                &quot;event_time&quot;: &quot;21:00:00&quot;,
+                &quot;category&quot;: &quot;samba&quot;,
+                &quot;is_active&quot;: true,
+                &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
+                &quot;is_featured&quot;: true,
+                &quot;spotify_url&quot;: null,
+                &quot;bar&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;user_id&quot;: 2,
+                    &quot;name&quot;: &quot;Bar do Teste&quot;,
+                    &quot;cnpj&quot;: &quot;12345678000195&quot;,
+                    &quot;phone&quot;: &quot;54999999999&quot;,
+                    &quot;city&quot;: &quot;Porto Alegre&quot;,
+                    &quot;address&quot;: &quot;Rua Teste, 123&quot;,
+                    &quot;instagram&quot;: &quot;@bardoteste&quot;,
+                    &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
+                    &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
+                    &quot;plan&quot;: &quot;free&quot;,
+                    &quot;whatsapp&quot;: null
+                }
+            }
+        ],
+        &quot;first_page_url&quot;: &quot;http://localhost:8000/api/events/featured?page=1&quot;,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;last_page_url&quot;: &quot;http://localhost:8000/api/events/featured?page=1&quot;,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;http://localhost:8000/api/events/featured?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;page&quot;: 1,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;page&quot;: null,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;next_page_url&quot;: null,
+        &quot;path&quot;: &quot;http://localhost:8000/api/events/featured&quot;,
+        &quot;per_page&quot;: 10,
+        &quot;prev_page_url&quot;: null,
+        &quot;to&quot;: 1,
+        &quot;total&quot;: 1
+    },
+    &quot;message&quot;: &quot;&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-events-featured" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-events-featured"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-events-featured"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-events-featured" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-events-featured">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-events-featured" data-method="GET"
+      data-path="api/events/featured"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-events-featured', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-events-featured"
+                    onclick="tryItOut('GETapi-events-featured');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-events-featured"
+                    onclick="cancelTryOut('GETapi-events-featured');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-events-featured"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/events/featured</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-events-featured"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-events-featured"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                     <h2 id="events-GETapi-events--event_id-">Detalhes do evento</h2>
 
 <p>
@@ -1604,7 +1833,9 @@ access-control-allow-origin: *
         &quot;category&quot;: &quot;samba&quot;,
         &quot;is_active&quot;: true,
         &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
+        &quot;is_featured&quot;: true,
+        &quot;spotify_url&quot;: null,
         &quot;bar&quot;: {
             &quot;id&quot;: 1,
             &quot;user_id&quot;: 2,
@@ -1616,7 +1847,9 @@ access-control-allow-origin: *
             &quot;instagram&quot;: &quot;@bardoteste&quot;,
             &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
             &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-03-08T20:22:32.000000Z&quot;
+            &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
+            &quot;plan&quot;: &quot;free&quot;,
+            &quot;whatsapp&quot;: null
         }
     },
     &quot;message&quot;: &quot;&quot;
@@ -1715,7 +1948,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </p>
 
 <p>Cria um novo evento vinculado ao bar do usuário autenticado.
-Apenas usuários com role bar_owner podem criar eventos.</p>
+Apenas usuários com role bar_owner podem criar eventos.
+Apenas bares com plano premium podem marcar is_featured como true.</p>
 
 <span id="example-requests-POSTapi-events">
 <blockquote>Example request:</blockquote>
@@ -1732,7 +1966,9 @@ Apenas usuários com role bar_owner podem criar eventos.</p>
     \"event_date\": \"2026-04-15\",
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
-    \"is_active\": true
+    \"is_active\": true,
+    \"is_featured\": true,
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
 }"
 </code></pre></div>
 
@@ -1753,7 +1989,9 @@ let body = {
     "event_date": "2026-04-15",
     "event_time": "21:00",
     "category": "samba",
-    "is_active": true
+    "is_active": true,
+    "is_featured": true,
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
 };
 
 fetch(url, {
@@ -1920,6 +2158,40 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Define se o evento está ativo. Example: <code>true</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_featured</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-events" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="true"
+                   data-endpoint="POSTapi-events"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-events" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="false"
+                   data-endpoint="POSTapi-events"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="spotify_url"                data-endpoint="POSTapi-events"
+               value="https://open.spotify.com/playlist/exemplo"
+               data-component="body">
+    <br>
+<p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
+        </div>
         </form>
 
                     <h2 id="events-PUTapi-events--event_id-">Atualizar evento</h2>
@@ -1927,7 +2199,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Atualiza os dados de um evento. Apenas o dono do bar pode editar.</p>
+<p>Atualiza os dados de um evento. Apenas o dono do bar pode editar.
+Apenas bares com plano premium podem marcar is_featured como true.</p>
 
 <span id="example-requests-PUTapi-events--event_id-">
 <blockquote>Example request:</blockquote>
@@ -1944,7 +2217,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"event_date\": \"2026-04-15\",
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
-    \"is_active\": true
+    \"is_active\": true,
+    \"is_featured\": true,
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
 }"
 </code></pre></div>
 
@@ -1965,7 +2240,9 @@ let body = {
     "event_date": "2026-04-15",
     "event_time": "21:00",
     "category": "samba",
-    "is_active": true
+    "is_active": true,
+    "is_featured": true,
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
 };
 
 fetch(url, {
@@ -2145,6 +2422,40 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Define se o evento está ativo. Example: <code>true</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_featured</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="PUTapi-events--event_id-" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="true"
+                   data-endpoint="PUTapi-events--event_id-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PUTapi-events--event_id-" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="false"
+                   data-endpoint="PUTapi-events--event_id-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="spotify_url"                data-endpoint="PUTapi-events--event_id-"
+               value="https://open.spotify.com/playlist/exemplo"
+               data-component="body">
+    <br>
+<p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
+        </div>
         </form>
 
                     <h2 id="events-DELETEapi-events--event_id-">Desativar evento</h2>
@@ -2169,7 +2480,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"event_date\": \"2026-04-15\",
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
-    \"is_active\": true
+    \"is_active\": true,
+    \"is_featured\": true,
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
 }"
 </code></pre></div>
 
@@ -2190,7 +2503,9 @@ let body = {
     "event_date": "2026-04-15",
     "event_time": "21:00",
     "category": "samba",
-    "is_active": true
+    "is_active": true,
+    "is_featured": true,
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
 };
 
 fetch(url, {
@@ -2369,6 +2684,40 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </label>
     <br>
 <p>Define se o evento está ativo. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_featured</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="DELETEapi-events--event_id-" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="true"
+                   data-endpoint="DELETEapi-events--event_id-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="DELETEapi-events--event_id-" style="display: none">
+            <input type="radio" name="is_featured"
+                   value="false"
+                   data-endpoint="DELETEapi-events--event_id-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="spotify_url"                data-endpoint="DELETEapi-events--event_id-"
+               value="https://open.spotify.com/playlist/exemplo"
+               data-component="body">
+    <br>
+<p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
         </div>
         </form>
 

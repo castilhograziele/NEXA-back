@@ -26,6 +26,7 @@ class EventController extends Controller
      * Listar eventos
      *
      * Retorna a lista paginada de eventos ativos com filtros opcionais.
+     * Use o filtro date com a data de hoje para obter os eventos "Esta noite".
      *
      * @unauthenticated
      * @queryParam category string Filtrar por categoria. Example: samba
@@ -39,6 +40,25 @@ class EventController extends Controller
             'city',
             'date',
         ]));
+
+        return response()->json([
+            'success' => true,
+            'data'    => $events,
+            'message' => '',
+        ]);
+    }
+
+    /**
+     * Eventos em destaque
+     *
+     * Retorna eventos marcados como destaque por bares com plano premium.
+     * Usado para a seção "Não pode perder".
+     *
+     * @unauthenticated
+     */
+    public function featured(): JsonResponse
+    {
+        $events = $this->eventService->featured();
 
         return response()->json([
             'success' => true,
@@ -74,6 +94,7 @@ class EventController extends Controller
      *
      * Cria um novo evento vinculado ao bar do usuário autenticado.
      * Apenas usuários com role bar_owner podem criar eventos.
+     * Apenas bares com plano premium podem marcar is_featured como true.
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
@@ -92,10 +113,13 @@ class EventController extends Controller
      * Atualizar evento
      *
      * Atualiza os dados de um evento. Apenas o dono do bar pode editar.
+     * Apenas bares com plano premium podem marcar is_featured como true.
      */
     public function update(UpdateEventRequest $request, Event $event): JsonResponse
     {
-        $event = $this->eventService->update($event, $request->validated());
+        $bar = $request->user()->bar;
+
+        $event = $this->eventService->update($event, $request->validated(), $bar);
 
         return response()->json([
             'success' => true,

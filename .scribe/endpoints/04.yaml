@@ -1,25 +1,25 @@
-name: Métricas
+name: Bars
 description: |-
 
-  Endpoints para visualização de métricas do bar e eventos.
-  Apenas usuários com role bar_owner têm acesso.
+  Endpoints para cadastro e gestão de bares.
 endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/metrics/bar
+      - POST
+    uri: api/bars
     metadata:
       custom: []
-      groupName: Métricas
+      groupName: Bars
       groupDescription: |-
 
-        Endpoints para visualização de métricas do bar e eventos.
-        Apenas usuários com role bar_owner têm acesso.
+        Endpoints para cadastro e gestão de bares.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Métricas do bar'
-      description: 'Retorna um resumo de visualizações e inscrições de todos os eventos do bar.'
+      title: 'Cadastrar bar'
+      description: |-
+        Cria um novo bar vinculado ao usuário autenticado.
+        Apenas usuários com role bar_owner podem cadastrar um bar.
       authenticated: false
       deprecated: false
     headers:
@@ -27,6 +27,147 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nome do bar. Must not be greater than 255 characters.'
+        required: true
+        example: 'Bar do Zé'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      cnpj:
+        custom: []
+        name: cnpj
+        description: 'CNPJ do bar (apenas números, 14 dígitos). Must be 14 characters.'
+        required: true
+        example: '12345678000195'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Telefone de contato. Must not be greater than 20 characters.'
+        required: false
+        example: '54999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      city:
+        custom: []
+        name: city
+        description: 'Cidade onde o bar está localizado. Must not be greater than 255 characters.'
+        required: false
+        example: 'Passo Fundo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: 'Endereço completo do bar. Must not be greater than 255 characters.'
+        required: false
+        example: 'Rua Morom, 123'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      instagram:
+        custom: []
+        name: instagram
+        description: 'Perfil do Instagram do bar. Must not be greater than 255 characters.'
+        required: false
+        example: '@bardoze'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      whatsapp:
+        custom: []
+        name: whatsapp
+        description: 'Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters.'
+        required: false
+        example: '54999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Descrição do bar.'
+        required: false
+        example: 'O melhor bar da cidade!'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Bar do Zé'
+      cnpj: '12345678000195'
+      phone: '54999999999'
+      city: 'Passo Fundo'
+      address: 'Rua Morom, 123'
+      instagram: '@bardoze'
+      whatsapp: '54999999999'
+      description: 'O melhor bar da cidade!'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/bars/{bar_id}'
+    metadata:
+      custom: []
+      groupName: Bars
+      groupDescription: |-
+
+        Endpoints para cadastro e gestão de bares.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Detalhes do bar'
+      description: 'Retorna os dados de um bar específico.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      bar_id:
+        custom: []
+        name: bar_id
+        description: 'The ID of the bar.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      bar_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -50,31 +191,28 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/metrics/events/{event_id}'
+      - PUT
+    uri: 'api/bars/{bar_id}'
     metadata:
       custom: []
-      groupName: Métricas
+      groupName: Bars
       groupDescription: |-
 
-        Endpoints para visualização de métricas do bar e eventos.
-        Apenas usuários com role bar_owner têm acesso.
+        Endpoints para cadastro e gestão de bares.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Métricas do evento'
-      description: |-
-        Retorna métricas detalhadas de um evento, incluindo lista de inscritos.
-        Apenas o dono do bar pode ver as métricas do seu evento.
+      title: 'Atualizar bar'
+      description: 'Atualiza os dados do bar. Apenas o dono pode editar.'
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      event_id:
+      bar_id:
         custom: []
-        name: event_id
-        description: 'The ID of the event.'
+        name: bar_id
+        description: 'The ID of the bar.'
         required: true
         example: 1
         type: integer
@@ -83,22 +221,97 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      event_id: 1
+      bar_id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
+    bodyParameters:
+      name:
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        name: name
+        description: 'Nome do bar. Must not be greater than 255 characters.'
+        required: false
+        example: 'Bar do Zé'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Telefone de contato. Must not be greater than 20 characters.'
+        required: false
+        example: '54999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      city:
+        custom: []
+        name: city
+        description: 'Cidade onde o bar está localizado. Must not be greater than 255 characters.'
+        required: false
+        example: 'Passo Fundo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      address:
+        custom: []
+        name: address
+        description: 'Endereço completo do bar. Must not be greater than 255 characters.'
+        required: false
+        example: 'Rua Morom, 123'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      instagram:
+        custom: []
+        name: instagram
+        description: 'Perfil do Instagram do bar. Must not be greater than 255 characters.'
+        required: false
+        example: '@bardoze'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      whatsapp:
+        custom: []
+        name: whatsapp
+        description: 'Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters.'
+        required: false
+        example: '54999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Descrição do bar.'
+        required: false
+        example: 'O melhor bar da cidade!'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Bar do Zé'
+      phone: '54999999999'
+      city: 'Passo Fundo'
+      address: 'Rua Morom, 123'
+      instagram: '@bardoze'
+      whatsapp: '54999999999'
+      description: 'O melhor bar da cidade!'
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null

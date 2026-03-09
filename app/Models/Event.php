@@ -16,6 +16,8 @@ class Event extends Model
         'event_time',
         'category',
         'is_active',
+        'is_featured',
+        'spotify_url',
     ];
 
     // um evento pertence a um bar

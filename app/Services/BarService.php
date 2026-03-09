@@ -27,13 +27,21 @@ class BarService
             'city'        => $data['city'] ?? null,
             'address'     => $data['address'] ?? null,
             'instagram'   => $data['instagram'] ?? null,
+            'whatsapp'    => $data['whatsapp'] ?? null,
             'description' => $data['description'] ?? null,
         ]);
     }
 
-    
+    // Atualiza os dados do bar
     public function update(Bar $bar, array $data): Bar
     {
+        // Apenas premium pode adicionar WhatsApp
+        if (!empty($data['whatsapp']) && !$bar->isPremium()) {
+            throw ValidationException::withMessages([
+                'whatsapp' => ['Apenas bares com plano premium podem adicionar link do WhatsApp.'],
+            ]);
+        }
+
         $bar->update($data);
 
         return $bar;

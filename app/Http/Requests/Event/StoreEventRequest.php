@@ -20,10 +20,11 @@ class StoreEventRequest extends FormRequest
             'event_time'  => ['required', 'date_format:H:i'],
             'category'    => ['required', 'string', 'max:100'],
             'is_active'   => ['nullable', 'boolean'],
+            'is_featured' => ['nullable', 'boolean'],
+            'spotify_url' => ['nullable', 'url', 'max:255'],
         ];
     }
 
-    // Exemplos para a documentação do Scribe
     public function bodyParameters(): array
     {
         return [
@@ -50,6 +51,14 @@ class StoreEventRequest extends FormRequest
             'is_active' => [
                 'description' => 'Define se o evento está ativo.',
                 'example'     => true,
+            ],
+            'is_featured' => [
+                'description' => 'Define se o evento aparece em "Não pode perder". Apenas bares premium.',
+                'example'     => true,
+            ],
+            'spotify_url' => [
+                'description' => 'Link da playlist do Spotify. Apenas bares premium.',
+                'example'     => 'https://open.spotify.com/playlist/exemplo',
             ],
         ];
     }

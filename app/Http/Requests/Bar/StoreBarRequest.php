@@ -20,11 +20,11 @@ class StoreBarRequest extends FormRequest
             'city'        => ['nullable', 'string', 'max:255'],
             'address'     => ['nullable', 'string', 'max:255'],
             'instagram'   => ['nullable', 'string', 'max:255'],
+            'whatsapp'    => ['nullable', 'string', 'max:20'],
             'description' => ['nullable', 'string'],
         ];
     }
 
-    // Exemplos para a documentação do Scribe
     public function bodyParameters(): array
     {
         return [
@@ -51,6 +51,10 @@ class StoreBarRequest extends FormRequest
             'instagram' => [
                 'description' => 'Perfil do Instagram do bar.',
                 'example'     => '@bardoze',
+            ],
+            'whatsapp' => [
+                'description' => 'Número do WhatsApp para contato ou reservas.',
+                'example'     => '54999999999',
             ],
             'description' => [
                 'description' => 'Descrição do bar.',
