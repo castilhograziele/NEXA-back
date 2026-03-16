@@ -63,4 +63,22 @@ class EventSubscriptionController extends Controller
             'message' => '',
         ]);
     }
+/**
+     * Status da inscrição
+     *
+     * Retorna se o usuário autenticado está inscrito em um evento.
+     */
+public function checkStatus(Request $request, Event $event): JsonResponse
+    {
+        $isSubscribed = $request->user()
+            ->subscribedEvents()
+            ->where('event_id', $event->id)
+            ->exists();
+
+        return response()->json([
+            'success' => true,
+            'data'    => ['is_subscribed' => $isSubscribed],
+            'message' => '',
+        ]);
+    }
 }
