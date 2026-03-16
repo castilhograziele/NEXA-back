@@ -38,7 +38,12 @@ endpoints:
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
-          access-control-allow-origin: '*'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
         description: null
     responseFields: []
     auth: []
@@ -130,6 +135,65 @@ endpoints:
     cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}/subscription-status'
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Status da inscrição'
+      description: 'Retorna se o usuário autenticado está inscrito em um evento.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
     responseFields: []
     auth: []
     controller: null

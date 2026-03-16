@@ -5,21 +5,28 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\EventSubscription;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\ValidationException;
 
 class EventSubscriptionService
 {
-    // Inscreve o usuário em um evento
+    /**
+     * Inscreve o usuário em um evento.
+     *
+     * Valida se o evento está ativo, se o usuário tem idade suficiente
+     * e se ainda não está inscrito antes de criar a inscrição.
+     *
+     * @throws ValidationException
+     */
     public function subscribe(User $user, Event $event): EventSubscription
     {
-        // Verifica se o evento está ativo
         if (!$event->is_active) {
             throw ValidationException::withMessages([
                 'event' => ['Este evento não está disponível para inscrições.'],
             ]);
         }
 
-        // Verifica classificação etária do evento
+        // Bloqueia inscrição se o usuário não tiver a idade mínima exigida
         if (!$event->isAgeAllowed($user)) {
             throw ValidationException::withMessages([
                 'event' => [
@@ -30,7 +37,6 @@ class EventSubscriptionService
             ]);
         }
 
-        // Verifica se o usuário já está inscrito
         $already = EventSubscription::where('event_id', $event->id)
             ->where('user_id', $user->id)
             ->exists();
@@ -41,14 +47,17 @@ class EventSubscriptionService
             ]);
         }
 
-        // Cria a inscrição
         return EventSubscription::create([
             'event_id' => $event->id,
             'user_id'  => $user->id,
         ]);
     }
 
-    // Cancela a inscrição do usuário em um evento
+    /**
+     * Cancela a inscrição do usuário em um evento.
+     *
+     * @throws ValidationException
+     */
     public function unsubscribe(User $user, Event $event): void
     {
         $subscription = EventSubscription::where('event_id', $event->id)
@@ -64,8 +73,10 @@ class EventSubscriptionService
         $subscription->delete();
     }
 
-    // Lista os eventos em que o usuário está inscrito
-    public function userSubscriptions(User $user)
+    /**
+     * Retorna os eventos em que o usuário está inscrito, paginados.
+     */
+    public function userSubscriptions(User $user): LengthAwarePaginator
     {
         return $user->subscribedEvents()
                     ->where('is_active', true)

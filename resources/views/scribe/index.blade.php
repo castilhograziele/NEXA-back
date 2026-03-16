@@ -77,6 +77,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="autenticacao-POSTapi-auth-login">
                                 <a href="#autenticacao-POSTapi-auth-login">Login</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="autenticacao-POSTapi-auth-verify-otp">
+                                <a href="#autenticacao-POSTapi-auth-verify-otp">Verificar OTP</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="autenticacao-POSTapi-auth-logout">
                                 <a href="#autenticacao-POSTapi-auth-logout">Logout</a>
                             </li>
@@ -140,6 +143,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="inscricoes-DELETEapi-events--event_id--subscribe">
                                 <a href="#inscricoes-DELETEapi-events--event_id--subscribe">Cancelar inscrição</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="inscricoes-GETapi-events--event_id--subscription-status">
+                                <a href="#inscricoes-GETapi-events--event_id--subscription-status">Status da inscrição</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-metricas" class="tocify-header">
@@ -164,7 +170,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Atualizado em: 09/03/2026</li>
+        <li>Atualizado em: 16/03/2026</li>
     </ul>
 </div>
 
@@ -187,14 +193,15 @@
 
         <h1 id="autenticacao">Autenticação</h1>
 
-    <p>Endpoints para registro, login e logout de usuários.</p>
+    <p>Endpoints para registro, login e logout via OTP por SMS.</p>
 
                                 <h2 id="autenticacao-POSTapi-auth-register">Registrar usuário</h2>
 
 <p>
 </p>
 
-<p>Cria um novo usuário e retorna o token de acesso.</p>
+<p>Cria um novo usuário e envia código OTP por SMS.
+O token de acesso só é retornado após verificar o código.</p>
 
 <span id="example-requests-POSTapi-auth-register">
 <blockquote>Example request:</blockquote>
@@ -207,8 +214,11 @@
     --header "Accept: application/json" \
     --data "{
     \"name\": \"João Silva\",
-    \"email\": \"joao@example.com\",
-    \"password\": \"password123\"
+    \"phone\": \"+5554999999999\",
+    \"cpf\": \"12345678901\",
+    \"birth_date\": \"1990-05-15\",
+    \"role\": \"user\",
+    \"email\": \"joao@example.com\"
 }"
 </code></pre></div>
 
@@ -225,8 +235,11 @@ const headers = {
 
 let body = {
     "name": "João Silva",
-    "email": "joao@example.com",
-    "password": "password123"
+    "phone": "+5554999999999",
+    "cpf": "12345678901",
+    "birth_date": "1990-05-15",
+    "role": "user",
+    "email": "joao@example.com"
 };
 
 fetch(url, {
@@ -324,28 +337,66 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Nome completo do usuário. Must not be greater than 255 characters. Example: <code>João Silva</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-register"
+               value="+5554999999999"
+               data-component="body">
+    <br>
+<p>Telefone com DDI. Um SMS com código será enviado. Must match the regex /^+?[1-9]\d{7,14}$/. Example: <code>+5554999999999</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>cpf</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="cpf"                data-endpoint="POSTapi-auth-register"
+               value="12345678901"
+               data-component="body">
+    <br>
+<p>CPF do usuário, apenas números, 11 dígitos. Must match the regex /^\d{11}$/. Must be 11 characters. Example: <code>12345678901</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>birth_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="birth_date"                data-endpoint="POSTapi-auth-register"
+               value="1990-05-15"
+               data-component="body">
+    <br>
+<p>Data de nascimento (formato Y-m-d). Must be a valid date. Example: <code>1990-05-15</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>role</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="role"                data-endpoint="POSTapi-auth-register"
+               value="user"
+               data-component="body">
+    <br>
+<p>Papel do usuário: user ou bar_owner. Example: <code>user</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>user</code></li> <li><code>bar_owner</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="email"                data-endpoint="POSTapi-auth-register"
                value="joao@example.com"
                data-component="body">
     <br>
-<p>E-mail do usuário. Must be a valid email address. Example: <code>joao@example.com</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-register"
-               value="password123"
-               data-component="body">
-    <br>
-<p>Senha com mínimo de 8 caracteres. Must be at least 8 characters. Example: <code>password123</code></p>
+<p>Obrigatório apenas para bar_owner, opcional para user. Must be a valid email address. Must not be greater than 255 characters. Example: <code>joao@example.com</code></p>
         </div>
         </form>
 
@@ -354,7 +405,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-<p>Autentica o usuário e retorna o token de acesso.</p>
+<p>Solicita código OTP para o telefone informado.
+O token de acesso só é retornado após verificar o código.</p>
 
 <span id="example-requests-POSTapi-auth-login">
 <blockquote>Example request:</blockquote>
@@ -366,8 +418,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"usuario@example.com\",
-    \"password\": \"password123\"
+    \"phone\": \"+5511999999999\"
 }"
 </code></pre></div>
 
@@ -383,8 +434,7 @@ const headers = {
 };
 
 let body = {
-    "email": "usuario@example.com",
-    "password": "password123"
+    "phone": "+5511999999999"
 };
 
 fetch(url, {
@@ -470,28 +520,162 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-auth-login"
-               value="usuario@example.com"
+                              name="phone"                data-endpoint="POSTapi-auth-login"
+               value="+5511999999999"
                data-component="body">
     <br>
-<p>E-mail do usuário. Must be a valid email address. Example: <code>usuario@example.com</code></p>
+<p>Telefone cadastrado. Receberá um SMS com o código. Must match the regex /^+?[1-9]\d{7,14}$/. Example: <code>+5511999999999</code></p>
+        </div>
+        </form>
+
+                    <h2 id="autenticacao-POSTapi-auth-verify-otp">Verificar OTP</h2>
+
+<p>
+</p>
+
+<p>Valida o código recebido por SMS e retorna o token de acesso.</p>
+
+<span id="example-requests-POSTapi-auth-verify-otp">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/auth/verify-otp" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"phone\": \"+5511999999999\",
+    \"code\": \"123456\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/auth/verify-otp"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone": "+5511999999999",
+    "code": "123456"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-verify-otp">
+</span>
+<span id="execution-results-POSTapi-auth-verify-otp" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-auth-verify-otp"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-verify-otp"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-verify-otp" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-verify-otp">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-auth-verify-otp" data-method="POST"
+      data-path="api/auth/verify-otp"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-verify-otp', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-verify-otp"
+                    onclick="tryItOut('POSTapi-auth-verify-otp');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-verify-otp"
+                    onclick="cancelTryOut('POSTapi-auth-verify-otp');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-verify-otp"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/verify-otp</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-verify-otp"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-verify-otp"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-verify-otp"
+               value="+5511999999999"
+               data-component="body">
+    <br>
+<p>Telefone que recebeu o código. Must match the regex /^+?[1-9]\d{7,14}$/. Example: <code>+5511999999999</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-login"
-               value="password123"
+                              name="code"                data-endpoint="POSTapi-auth-verify-otp"
+               value="123456"
                data-component="body">
     <br>
-<p>Senha do usuário. Example: <code>password123</code></p>
+<p>Código de 6 dígitos recebido por SMS. Must be 6 digits. Example: <code>123456</code></p>
         </div>
         </form>
 
@@ -652,7 +836,12 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
@@ -1014,7 +1203,12 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
@@ -1396,46 +1590,23 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;success&quot;: true,
     &quot;data&quot;: {
         &quot;current_page&quot;: 1,
-        &quot;data&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;bar_id&quot;: 1,
-                &quot;title&quot;: &quot;Show de Samba&quot;,
-                &quot;description&quot;: &quot;Uma noite incr&iacute;vel de samba ao vivo&quot;,
-                &quot;event_date&quot;: &quot;2026-04-15&quot;,
-                &quot;event_time&quot;: &quot;21:00:00&quot;,
-                &quot;category&quot;: &quot;samba&quot;,
-                &quot;is_active&quot;: true,
-                &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
-                &quot;is_featured&quot;: true,
-                &quot;spotify_url&quot;: null,
-                &quot;bar&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user_id&quot;: 2,
-                    &quot;name&quot;: &quot;Bar do Teste&quot;,
-                    &quot;cnpj&quot;: &quot;12345678000195&quot;,
-                    &quot;phone&quot;: &quot;54999999999&quot;,
-                    &quot;city&quot;: &quot;Porto Alegre&quot;,
-                    &quot;address&quot;: &quot;Rua Teste, 123&quot;,
-                    &quot;instagram&quot;: &quot;@bardoteste&quot;,
-                    &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
-                    &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
-                    &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
-                    &quot;plan&quot;: &quot;free&quot;,
-                    &quot;whatsapp&quot;: null
-                }
-            }
-        ],
+        &quot;data&quot;: [],
         &quot;first_page_url&quot;: &quot;http://localhost:8000/api/events?page=1&quot;,
-        &quot;from&quot;: 1,
+        &quot;from&quot;: null,
         &quot;last_page&quot;: 1,
         &quot;last_page_url&quot;: &quot;http://localhost:8000/api/events?page=1&quot;,
         &quot;links&quot;: [
@@ -1462,8 +1633,8 @@ access-control-allow-origin: *
         &quot;path&quot;: &quot;http://localhost:8000/api/events&quot;,
         &quot;per_page&quot;: 10,
         &quot;prev_page_url&quot;: null,
-        &quot;to&quot;: 1,
-        &quot;total&quot;: 1
+        &quot;to&quot;: null,
+        &quot;total&quot;: 0
     },
     &quot;message&quot;: &quot;&quot;
 }</code>
@@ -1626,46 +1797,23 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;success&quot;: true,
     &quot;data&quot;: {
         &quot;current_page&quot;: 1,
-        &quot;data&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;bar_id&quot;: 1,
-                &quot;title&quot;: &quot;Show de Samba&quot;,
-                &quot;description&quot;: &quot;Uma noite incr&iacute;vel de samba ao vivo&quot;,
-                &quot;event_date&quot;: &quot;2026-04-15&quot;,
-                &quot;event_time&quot;: &quot;21:00:00&quot;,
-                &quot;category&quot;: &quot;samba&quot;,
-                &quot;is_active&quot;: true,
-                &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
-                &quot;is_featured&quot;: true,
-                &quot;spotify_url&quot;: null,
-                &quot;bar&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user_id&quot;: 2,
-                    &quot;name&quot;: &quot;Bar do Teste&quot;,
-                    &quot;cnpj&quot;: &quot;12345678000195&quot;,
-                    &quot;phone&quot;: &quot;54999999999&quot;,
-                    &quot;city&quot;: &quot;Porto Alegre&quot;,
-                    &quot;address&quot;: &quot;Rua Teste, 123&quot;,
-                    &quot;instagram&quot;: &quot;@bardoteste&quot;,
-                    &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
-                    &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
-                    &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
-                    &quot;plan&quot;: &quot;free&quot;,
-                    &quot;whatsapp&quot;: null
-                }
-            }
-        ],
+        &quot;data&quot;: [],
         &quot;first_page_url&quot;: &quot;http://localhost:8000/api/events/featured?page=1&quot;,
-        &quot;from&quot;: 1,
+        &quot;from&quot;: null,
         &quot;last_page&quot;: 1,
         &quot;last_page_url&quot;: &quot;http://localhost:8000/api/events/featured?page=1&quot;,
         &quot;links&quot;: [
@@ -1692,8 +1840,8 @@ access-control-allow-origin: *
         &quot;path&quot;: &quot;http://localhost:8000/api/events/featured&quot;,
         &quot;per_page&quot;: 10,
         &quot;prev_page_url&quot;: null,
-        &quot;to&quot;: 1,
-        &quot;total&quot;: 1
+        &quot;to&quot;: null,
+        &quot;total&quot;: 0
     },
     &quot;message&quot;: &quot;&quot;
 }</code>
@@ -1818,7 +1966,14 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
@@ -1827,28 +1982,29 @@ access-control-allow-origin: *
         &quot;id&quot;: 1,
         &quot;bar_id&quot;: 1,
         &quot;title&quot;: &quot;Show de Samba&quot;,
-        &quot;description&quot;: &quot;Uma noite incr&iacute;vel de samba ao vivo&quot;,
+        &quot;description&quot;: null,
         &quot;event_date&quot;: &quot;2026-04-15&quot;,
         &quot;event_time&quot;: &quot;21:00:00&quot;,
         &quot;category&quot;: &quot;samba&quot;,
         &quot;is_active&quot;: true,
-        &quot;created_at&quot;: &quot;2026-03-08T20:34:14.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2026-03-09T22:32:40.000000Z&quot;,
-        &quot;is_featured&quot;: true,
+        &quot;created_at&quot;: &quot;2026-03-16T19:46:46.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2026-03-16T19:50:14.000000Z&quot;,
+        &quot;is_featured&quot;: false,
         &quot;spotify_url&quot;: null,
+        &quot;age_restriction&quot;: &quot;18&quot;,
         &quot;bar&quot;: {
             &quot;id&quot;: 1,
-            &quot;user_id&quot;: 2,
-            &quot;name&quot;: &quot;Bar do Teste&quot;,
+            &quot;user_id&quot;: 1,
+            &quot;name&quot;: &quot;Bar Teste&quot;,
             &quot;cnpj&quot;: &quot;12345678000195&quot;,
-            &quot;phone&quot;: &quot;54999999999&quot;,
-            &quot;city&quot;: &quot;Porto Alegre&quot;,
-            &quot;address&quot;: &quot;Rua Teste, 123&quot;,
-            &quot;instagram&quot;: &quot;@bardoteste&quot;,
-            &quot;description&quot;: &quot;Descri&ccedil;&atilde;o atualizada do bar&quot;,
-            &quot;created_at&quot;: &quot;2026-03-08T20:18:56.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-03-09T22:58:36.000000Z&quot;,
-            &quot;plan&quot;: &quot;free&quot;,
+            &quot;phone&quot;: null,
+            &quot;city&quot;: null,
+            &quot;address&quot;: null,
+            &quot;instagram&quot;: null,
+            &quot;description&quot;: null,
+            &quot;created_at&quot;: &quot;2026-03-16T19:46:20.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-03-16T19:46:20.000000Z&quot;,
+            &quot;plan&quot;: &quot;premium&quot;,
             &quot;whatsapp&quot;: null
         }
     },
@@ -1968,7 +2124,8 @@ Apenas bares com plano premium podem marcar is_featured como true.</p>
     \"category\": \"samba\",
     \"is_active\": true,
     \"is_featured\": true,
-    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
+    \"age_restriction\": \"none\"
 }"
 </code></pre></div>
 
@@ -1991,7 +2148,8 @@ let body = {
     "category": "samba",
     "is_active": true,
     "is_featured": true,
-    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
+    "age_restriction": "none"
 };
 
 fetch(url, {
@@ -2192,6 +2350,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>age_restriction</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="age_restriction"                data-endpoint="POSTapi-events"
+               value="none"
+               data-component="body">
+    <br>
+<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
         </form>
 
                     <h2 id="events-PUTapi-events--event_id-">Atualizar evento</h2>
@@ -2219,7 +2391,8 @@ Apenas bares com plano premium podem marcar is_featured como true.</p>
     \"category\": \"samba\",
     \"is_active\": true,
     \"is_featured\": true,
-    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
+    \"age_restriction\": \"none\"
 }"
 </code></pre></div>
 
@@ -2242,7 +2415,8 @@ let body = {
     "category": "samba",
     "is_active": true,
     "is_featured": true,
-    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
+    "age_restriction": "none"
 };
 
 fetch(url, {
@@ -2456,6 +2630,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>age_restriction</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="age_restriction"                data-endpoint="PUTapi-events--event_id-"
+               value="none"
+               data-component="body">
+    <br>
+<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
         </form>
 
                     <h2 id="events-DELETEapi-events--event_id-">Desativar evento</h2>
@@ -2482,7 +2670,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"category\": \"samba\",
     \"is_active\": true,
     \"is_featured\": true,
-    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\"
+    \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
+    \"age_restriction\": \"none\"
 }"
 </code></pre></div>
 
@@ -2505,7 +2694,8 @@ let body = {
     "category": "samba",
     "is_active": true,
     "is_featured": true,
-    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo"
+    "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
+    "age_restriction": "none"
 };
 
 fetch(url, {
@@ -2719,6 +2909,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://open.spotify.com/playlist/exemplo</code></p>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>age_restriction</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="age_restriction"                data-endpoint="DELETEapi-events--event_id-"
+               value="none"
+               data-component="body">
+    <br>
+<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
         </form>
 
                 <h1 id="inscricoes">Inscrições</h1>
@@ -2771,7 +2975,12 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
@@ -3100,6 +3309,151 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="inscricoes-GETapi-events--event_id--subscription-status">Status da inscrição</h2>
+
+<p>
+</p>
+
+<p>Retorna se o usuário autenticado está inscrito em um evento.</p>
+
+<span id="example-requests-GETapi-events--event_id--subscription-status">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/events/1/subscription-status" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/subscription-status"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-events--event_id--subscription-status">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-events--event_id--subscription-status" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-events--event_id--subscription-status"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-events--event_id--subscription-status"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-events--event_id--subscription-status" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-events--event_id--subscription-status">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-events--event_id--subscription-status" data-method="GET"
+      data-path="api/events/{event_id}/subscription-status"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-events--event_id--subscription-status', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-events--event_id--subscription-status"
+                    onclick="tryItOut('GETapi-events--event_id--subscription-status');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-events--event_id--subscription-status"
+                    onclick="cancelTryOut('GETapi-events--event_id--subscription-status');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-events--event_id--subscription-status"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/events/{event_id}/subscription-status</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-events--event_id--subscription-status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-events--event_id--subscription-status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="GETapi-events--event_id--subscription-status"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                 <h1 id="metricas">Métricas</h1>
 
     <p>Endpoints para visualização de métricas do bar e eventos.
@@ -3151,7 +3505,12 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
@@ -3279,7 +3638,12 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
-access-control-allow-origin: *
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{

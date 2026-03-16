@@ -40,7 +40,12 @@ endpoints:
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
-          access-control-allow-origin: '*'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
         description: null
     responseFields: []
     auth: []
@@ -97,7 +102,12 @@ endpoints:
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
-          access-control-allow-origin: '*'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
         description: null
     responseFields: []
     auth: []

@@ -10,25 +10,27 @@ use Illuminate\Validation\ValidationException;
 
 class EventService
 {
-    // Lista eventos públicos com filtros opcionais
+    /**
+     * Lista eventos públicos ativos com filtros opcionais.
+     *
+     * Suporta filtro por categoria, cidade do bar e data.
+     * O filtro de data é usado para a seção "Esta noite" no frontend.
+     */
     public function list(array $filters): LengthAwarePaginator
     {
         $query = Event::with('bar')
             ->where('is_active', true);
 
-        // Filtro por categoria
         if (!empty($filters['category'])) {
             $query->where('category', $filters['category']);
         }
 
-        // Filtro por cidade (via bar)
         if (!empty($filters['city'])) {
             $query->whereHas('bar', function ($q) use ($filters) {
                 $q->where('city', $filters['city']);
             });
         }
 
-        // Filtro por data — usado para "Esta noite"
         if (!empty($filters['date'])) {
             $query->where('event_date', $filters['date']);
         }
@@ -36,7 +38,12 @@ class EventService
         return $query->orderBy('event_date')->paginate(10);
     }
 
-    // Retorna eventos destacados — "Não pode perder"
+    /**
+     * Retorna eventos marcados como destaque.
+     *
+     * Usado para a seção "Não pode perder" no frontend.
+     * Apenas bares premium podem marcar eventos como destaque.
+     */
     public function featured(): LengthAwarePaginator
     {
         return Event::with('bar')
@@ -46,17 +53,22 @@ class EventService
             ->paginate(10);
     }
 
-    // Verifica se o bar atingiu o limite de eventos do mês
+    /**
+     * Verifica se o bar atingiu o limite mensal de eventos.
+     *
+     * Plano free: máximo 2 eventos ativos por mês.
+     * Plano premium: sem limite (retorna null).
+     *
+     * @throws ValidationException
+     */
     private function checkMonthlyLimit(Bar $bar): void
     {
         $limit = $bar->monthlyEventLimit();
 
-        // null significa ilimitado (premium)
         if ($limit === null) {
             return;
         }
 
-        // Conta eventos ativos criados no mês atual
         $count = $bar->events()
             ->where('is_active', true)
             ->whereMonth('created_at', Carbon::now()->month)
@@ -70,10 +82,15 @@ class EventService
         }
     }
 
-    // Verifica se o bar pode usar funcionalidades premium
+    /**
+     * Verifica se o bar pode usar funcionalidades exclusivas do plano premium.
+     *
+     * Funcionalidades premium: destaque no evento e link do Spotify.
+     *
+     * @throws ValidationException
+     */
     private function checkPremiumFeatures(Bar $bar, array $data): void
     {
-        // Apenas premium pode destacar eventos
         if (!empty($data['is_featured']) && $data['is_featured'] === true) {
             if (!$bar->isPremium()) {
                 throw ValidationException::withMessages([
@@ -82,7 +99,6 @@ class EventService
             }
         }
 
-        // Apenas premium pode adicionar link do Spotify
         if (!empty($data['spotify_url'])) {
             if (!$bar->isPremium()) {
                 throw ValidationException::withMessages([
@@ -92,22 +108,30 @@ class EventService
         }
     }
 
-    // Cria um novo evento vinculado ao bar do usuário
+    /**
+     * Cria um novo evento vinculado ao bar.
+     *
+     * Valida o limite mensal e funcionalidades premium antes de criar.
+     *
+     * @throws ValidationException
+     */
     public function store(Bar $bar, array $data): Event
     {
-        // Verifica limite mensal de eventos
         $this->checkMonthlyLimit($bar);
-
-        // Verifica funcionalidades premium
         $this->checkPremiumFeatures($bar, $data);
 
         return $bar->events()->create($data);
     }
 
-    // Atualiza um evento existente
+    /**
+     * Atualiza os dados de um evento existente.
+     *
+     * Valida funcionalidades premium antes de atualizar.
+     *
+     * @throws ValidationException
+     */
     public function update(Event $event, array $data, Bar $bar): Event
     {
-        // Verifica funcionalidades premium
         $this->checkPremiumFeatures($bar, $data);
 
         $event->update($data);
@@ -115,7 +139,12 @@ class EventService
         return $event;
     }
 
-    // Desativa um evento (soft delete lógico)
+    /**
+     * Desativa um evento sem removê-lo do banco.
+     *
+     * Usado como soft delete lógico — o evento continua existindo
+     * mas não aparece nas listagens públicas.
+     */
     public function destroy(Event $event): void
     {
         $event->update(['is_active' => false]);
