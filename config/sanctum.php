@@ -29,7 +29,7 @@ return [
      * Prefixo dos tokens — permite que plataformas de segurança
      * detectem e alertem sobre tokens commitados em repositórios.
      */
-    'token_prefix' => env('SANCTUM_TOKEN_PREFIX', 'nexa_'),
+    'token_prefix' => env('SANCTUM_TOKEN_PREFIX', 'nyxa_'),
 
     'middleware' => [
         'authenticate_session'       => Laravel\Sanctum\Http\Middleware\AuthenticateSession::class,
