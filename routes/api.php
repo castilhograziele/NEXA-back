@@ -9,8 +9,9 @@ use App\Http\Controllers\MetricsController;
 
 // Rotas de autenticação — rate limit restritivo por IP
 Route::prefix('auth')->middleware('throttle:auth')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login',    [AuthController::class, 'login']);
+    Route::post('/register',    [AuthController::class, 'register']);
+    Route::post('/login',       [AuthController::class, 'login']);
+    Route::post('/verify-otp',  [AuthController::class, 'verifyOtp']);
 });
 
 // Rotas públicas de eventos — rate limit generoso

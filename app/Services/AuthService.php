@@ -3,42 +3,84 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Services\OtpService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    // Cria um novo usuário e atribui a role padrão
+    public function __construct(private OtpService $otpService) {}
+
+    // Cria usuário e dispara OTP — não retorna token ainda
     public function register(array $data): array
     {
         $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name'  => $data['name'],
+            'phone' => $data['phone'],
+            'email' => $data['email'] ?? null,
+            'role'  => $data['role'] ?? 'user',
         ]);
 
-        // Todo usuário começa com a role 'user'
-        $user->assignRole('user');
+        // Todo usuário começa com a role correta
+        $user->assignRole($data['role'] ?? 'user');
 
-        // Gera o token Sanctum
-        $token = $user->createToken('api-token')->plainTextToken;
+        // Gera e envia OTP — token só vem após verificação
+        $code = $this->otpService->generate($data['phone']);
 
-        return compact('user', 'token');
+        // Por enquanto loga o código — Twilio entra no próximo passo
+        Log::info('OTP gerado para novo usuário', [
+            'phone' => $data['phone'],
+            'code'  => $code, // remover após integrar Twilio
+        ]);
+
+        return [
+            'message' => 'Código enviado para ' . $data['phone'],
+            'phone'   => $data['phone'],
+        ];
     }
 
-    // Valida credenciais e gera token de acesso
+    // Valida telefone e dispara OTP — não retorna token ainda
     public function login(array $data): array
     {
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('phone', $data['phone'])->first();
 
-        // Verifica se o usuário existe e a senha está correta
-        if (! $user || ! Hash::check($data['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Credenciais inválidas.'],
+        // Resposta genérica — não revela se o telefone existe
+        if (! $user) {
+            Log::warning('OTP: tentativa de login com telefone não cadastrado', [
+                'phone' => $data['phone'],
+            ]);
+        } else {
+            $code = $this->otpService->generate($data['phone']);
+
+            Log::info('OTP gerado para login', [
+                'phone' => $data['phone'],
+                'code'  => $code, // remover após integrar Twilio
             ]);
         }
 
-        // Gera um novo token Sanctum
+        // Sempre retorna a mesma resposta — não revela se existe
+        return [
+            'message' => 'Se este número estiver cadastrado, um código foi enviado.',
+            'phone'   => $data['phone'],
+        ];
+    }
+
+    // Verifica OTP e retorna token de acesso
+    public function verifyOtp(string $phone, string $code): array
+    {
+        $valid = $this->otpService->verify($phone, $code);
+
+        if (! $valid) {
+            throw ValidationException::withMessages([
+                'code' => ['Código inválido, expirado ou número de tentativas excedido.'],
+            ]);
+        }
+
+        $user = User::where('phone', $phone)->firstOrFail();
+
+        // Revoga tokens anteriores antes de gerar novo
+        $user->tokens()->delete();
+
         $token = $user->createToken('api-token')->plainTextToken;
 
         return compact('user', 'token');

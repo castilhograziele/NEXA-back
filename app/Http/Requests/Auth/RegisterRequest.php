@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends FormRequest
 {
@@ -13,14 +14,31 @@ class RegisterRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $rules = [
+            'name'  => ['required', 'string', 'max:255'],
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^\+?[1-9]\d{7,14}$/',
+                // Usa a conexão padrão pgsql com o schema correto
+                Rule::unique('users', 'phone'),
+            ],
+            'role'  => ['sometimes', 'in:user,bar_owner'],
         ];
+
+        // E-mail obrigatório apenas para bar_owner
+        if ($this->input('role') === 'bar_owner') {
+            $rules['email'] = [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email'),
+            ];
+        }
+
+        return $rules;
     }
 
-    // Exemplos para a documentação do Scribe
     public function bodyParameters(): array
     {
         return [
@@ -28,17 +46,17 @@ class RegisterRequest extends FormRequest
                 'description' => 'Nome completo do usuário.',
                 'example'     => 'João Silva',
             ],
+            'phone' => [
+                'description' => 'Telefone com DDI. Um SMS com código será enviado.',
+                'example'     => '+5554999999999',
+            ],
             'email' => [
-                'description' => 'E-mail do usuário.',
+                'description' => 'Obrigatório apenas para bar_owner.',
                 'example'     => 'joao@example.com',
             ],
-            'password' => [
-                'description' => 'Senha com mínimo de 8 caracteres.',
-                'example'     => 'password123',
-            ],
-            'password_confirmation' => [
-                'description' => 'Confirmação da senha.',
-                'example'     => 'password123',
+            'role' => [
+                'description' => 'Papel do usuário: user ou bar_owner.',
+                'example'     => 'user',
             ],
         ];
     }

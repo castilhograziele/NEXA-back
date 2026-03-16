@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Services\AuthService;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\VerifyOtpRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * @group Autenticação
  *
- * Endpoints para registro, login e logout de usuários.
+ * Endpoints para registro, login e logout via OTP por SMS.
  */
 class AuthController extends Controller
 {
@@ -20,7 +21,8 @@ class AuthController extends Controller
     /**
      * Registrar usuário
      *
-     * Cria um novo usuário e retorna o token de acesso.
+     * Cria um novo usuário e envia código OTP por SMS.
+     * O token de acesso só é retornado após verificar o código.
      *
      * @unauthenticated
      */
@@ -31,20 +33,42 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'data'    => $result,
-            'message' => 'Usuário cadastrado com sucesso.',
+            'message' => 'Código enviado por SMS.',
         ], 201);
     }
 
     /**
      * Login
      *
-     * Autentica o usuário e retorna o token de acesso.
+     * Solicita código OTP para o telefone informado.
+     * O token de acesso só é retornado após verificar o código.
      *
      * @unauthenticated
      */
     public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->authService->login($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'data'    => $result,
+            'message' => 'Se este número estiver cadastrado, um código foi enviado.',
+        ]);
+    }
+
+    /**
+     * Verificar OTP
+     *
+     * Valida o código recebido por SMS e retorna o token de acesso.
+     *
+     * @unauthenticated
+     */
+    public function verifyOtp(VerifyOtpRequest $request): JsonResponse
+    {
+        $result = $this->authService->verifyOtp(
+            $request->validated('phone'),
+            $request->validated('code'),
+        );
 
         return response()->json([
             'success' => true,
