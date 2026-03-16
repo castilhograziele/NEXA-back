@@ -18,7 +18,25 @@ class Event extends Model
         'is_active',
         'is_featured',
         'spotify_url',
+        'age_restriction',
     ];
+
+    // Verifica se o usuário tem idade suficiente para o evento
+    public function isAgeAllowed(User $user): bool
+    {
+        // Evento livre — qualquer idade
+        if ($this->age_restriction === 'none') {
+            return true;
+        }
+
+        // Sem data de nascimento — bloqueia por segurança
+        if (!$user->birth_date) {
+            return false;
+        }
+
+        // Verifica se o usuário tem a idade mínima exigida
+        return $user->birth_date->age >= (int) $this->age_restriction;
+    }
 
     // um evento pertence a um bar
     public function bar(): BelongsTo

@@ -46,6 +46,11 @@ Thumbs.db
 Homestead.json
 Homestead.yaml
 
+# --- Scribe (documentação gerada automaticamente) ---
+/.scribe/endpoints.cache
+/public/vendor/scribe
+/storage/app/private/scribe
+
 # --- Arquivos que nunca devem existir no repo ---
 *.pem
 *.key

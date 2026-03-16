@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Event;
-use App\Models\User;
 use App\Models\EventSubscription;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class EventSubscriptionService
@@ -16,6 +16,17 @@ class EventSubscriptionService
         if (!$event->is_active) {
             throw ValidationException::withMessages([
                 'event' => ['Este evento não está disponível para inscrições.'],
+            ]);
+        }
+
+        // Verifica classificação etária do evento
+        if (!$event->isAgeAllowed($user)) {
+            throw ValidationException::withMessages([
+                'event' => [
+                    $event->age_restriction === '18'
+                        ? 'Este evento é disponível apenas para maiores de 18 anos.'
+                        : 'Este evento é disponível apenas para maiores de 21 anos.',
+                ],
             ]);
         }
 

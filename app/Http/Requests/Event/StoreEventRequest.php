@@ -14,14 +14,15 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'event_date'  => ['required', 'date', 'after_or_equal:today'],
-            'event_time'  => ['required', 'date_format:H:i'],
-            'category'    => ['required', 'string', 'max:100'],
-            'is_active'   => ['nullable', 'boolean'],
-            'is_featured' => ['nullable', 'boolean'],
-            'spotify_url' => ['nullable', 'url', 'max:255'],
+            'title'           => ['required', 'string', 'max:255'],
+            'description'     => ['nullable', 'string'],
+            'event_date'      => ['required', 'date', 'after_or_equal:today'],
+            'event_time'      => ['required', 'date_format:H:i'],
+            'category'        => ['required', 'string', 'max:100'],
+            'is_active'       => ['nullable', 'boolean'],
+            'is_featured'     => ['nullable', 'boolean'],
+            'spotify_url'     => ['nullable', 'url', 'max:255'],
+            'age_restriction' => ['nullable', 'in:none,18,21'],
         ];
     }
 
@@ -59,6 +60,10 @@ class StoreEventRequest extends FormRequest
             'spotify_url' => [
                 'description' => 'Link da playlist do Spotify. Apenas bares premium.',
                 'example'     => 'https://open.spotify.com/playlist/exemplo',
+            ],
+            'age_restriction' => [
+                'description' => 'Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21).',
+                'example'     => 'none',
             ],
         ];
     }

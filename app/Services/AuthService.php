@@ -15,10 +15,12 @@ class AuthService
     public function register(array $data): array
     {
         $user = User::create([
-            'name'  => $data['name'],
-            'phone' => $data['phone'],
-            'email' => $data['email'] ?? null,
-            'role'  => $data['role'] ?? 'user',
+            'name'       => $data['name'],
+            'phone'      => $data['phone'],
+            'email'      => $data['email'] ?? null,
+            'cpf'        => $data['cpf'],
+            'birth_date' => $data['birth_date'],
+            'role'       => $data['role'] ?? 'user',
         ]);
 
         // Todo usuário começa com a role correta
