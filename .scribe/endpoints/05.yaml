@@ -1,0 +1,300 @@
+name: Check-in
+description: |-
+
+  Endpoints para gerenciamento de check-in em eventos.
+  O self-checkin pode ser feito via QR Code ou pelo botão no app.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/events/{event_id}/self-checkin'
+    metadata:
+      custom: []
+      groupName: Check-in
+      groupDescription: |-
+
+        Endpoints para gerenciamento de check-in em eventos.
+        O self-checkin pode ser feito via QR Code ou pelo botão no app.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Self check-in'
+      description: |-
+        O próprio usuário realiza o check-in ao escanear o QR Code
+        ou clicar no botão "Faça seu check-in" dentro do evento.
+        O benefício é liberado automaticamente após a confirmação.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 3
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}/my-checkin'
+    metadata:
+      custom: []
+      groupName: Check-in
+      groupDescription: |-
+
+        Endpoints para gerenciamento de check-in em eventos.
+        O self-checkin pode ser feito via QR Code ou pelo botão no app.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Dados do check-in do usuário'
+      description: |-
+        Retorna os dados para exibição na tela de resgate após o check-in.
+        Exibe nome, CPF, data de nascimento, status e benefício.
+        Usado tanto no fluxo do QR Code quanto no botão do app.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 3
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/events/{event_id}/checkin/{user_id}'
+    metadata:
+      custom: []
+      groupName: Check-in
+      groupDescription: |-
+
+        Endpoints para gerenciamento de check-in em eventos.
+        O self-checkin pode ser feito via QR Code ou pelo botão no app.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Confirmar check-in manualmente'
+      description: |-
+        O bar_owner confirma a presença de um usuário inscrito no evento.
+        Alternativa ao self-checkin para casos especiais.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      user_id:
+        custom: []
+        name: user_id
+        description: 'The ID of the user.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      user:
+        custom: []
+        name: user
+        description: 'ID do usuário.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      user_id: 1
+      event: 3
+      user: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}/checkins'
+    metadata:
+      custom: []
+      groupName: Check-in
+      groupDescription: |-
+
+        Endpoints para gerenciamento de check-in em eventos.
+        O self-checkin pode ser feito via QR Code ou pelo botão no app.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar check-ins do evento'
+      description: |-
+        Retorna a lista de usuários que fizeram check-in no evento.
+        Apenas o bar_owner dono do evento tem acesso.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 3
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

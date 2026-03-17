@@ -161,6 +161,25 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-check-in" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="check-in">
+                    <a href="#check-in">Check-in</a>
+                </li>
+                                    <ul id="tocify-subheader-check-in" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="check-in-POSTapi-events--event_id--self-checkin">
+                                <a href="#check-in-POSTapi-events--event_id--self-checkin">Self check-in</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="check-in-GETapi-events--event_id--my-checkin">
+                                <a href="#check-in-GETapi-events--event_id--my-checkin">Dados do check-in do usuário</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="check-in-POSTapi-events--event_id--checkin--user_id-">
+                                <a href="#check-in-POSTapi-events--event_id--checkin--user_id-">Confirmar check-in manualmente</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="check-in-GETapi-events--event_id--checkins">
+                                <a href="#check-in-GETapi-events--event_id--checkins">Listar check-ins do evento</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
             </div>
 
     <ul class="toc-footer" id="toc-footer">
@@ -170,7 +189,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Atualizado em: 16/03/2026</li>
+        <li>Atualizado em: 17/03/2026</li>
     </ul>
 </div>
 
@@ -1992,6 +2011,7 @@ access-control-allow-credentials: true
         &quot;is_featured&quot;: false,
         &quot;spotify_url&quot;: null,
         &quot;age_restriction&quot;: &quot;18&quot;,
+        &quot;benefit&quot;: null,
         &quot;bar&quot;: {
             &quot;id&quot;: 1,
             &quot;user_id&quot;: 1,
@@ -2123,9 +2143,10 @@ Apenas bares com plano premium podem marcar is_featured como true.</p>
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
     \"is_active\": true,
-    \"is_featured\": true,
+    \"is_featured\": false,
     \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
-    \"age_restriction\": \"none\"
+    \"age_restriction\": \"none\",
+    \"benefit\": \"1 drink grátis na entrada\"
 }"
 </code></pre></div>
 
@@ -2147,9 +2168,10 @@ let body = {
     "event_time": "21:00",
     "category": "samba",
     "is_active": true,
-    "is_featured": true,
+    "is_featured": false,
     "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
-    "age_restriction": "none"
+    "age_restriction": "none",
+    "benefit": "1 drink grátis na entrada"
 };
 
 fetch(url, {
@@ -2336,7 +2358,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
@@ -2360,9 +2382,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="none"
                data-component="body">
     <br>
-<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+<p>Classificação etária: none (livre), 18 ou 21. Example: <code>none</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>benefit</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="benefit"                data-endpoint="POSTapi-events"
+               value="1 drink grátis na entrada"
+               data-component="body">
+    <br>
+<p>Benefício oferecido ao usuário que fizer check-in. Ex: 1 drink grátis, entrada gratuita. Must not be greater than 255 characters. Example: <code>1 drink grátis na entrada</code></p>
         </div>
         </form>
 
@@ -2390,9 +2424,10 @@ Apenas bares com plano premium podem marcar is_featured como true.</p>
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
     \"is_active\": true,
-    \"is_featured\": true,
+    \"is_featured\": false,
     \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
-    \"age_restriction\": \"none\"
+    \"age_restriction\": \"none\",
+    \"benefit\": \"1 drink grátis na entrada\"
 }"
 </code></pre></div>
 
@@ -2414,9 +2449,10 @@ let body = {
     "event_time": "21:00",
     "category": "samba",
     "is_active": true,
-    "is_featured": true,
+    "is_featured": false,
     "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
-    "age_restriction": "none"
+    "age_restriction": "none",
+    "benefit": "1 drink grátis na entrada"
 };
 
 fetch(url, {
@@ -2616,7 +2652,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
@@ -2640,9 +2676,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="none"
                data-component="body">
     <br>
-<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+<p>Classificação etária: none (livre), 18 ou 21. Example: <code>none</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>benefit</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="benefit"                data-endpoint="PUTapi-events--event_id-"
+               value="1 drink grátis na entrada"
+               data-component="body">
+    <br>
+<p>Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters. Example: <code>1 drink grátis na entrada</code></p>
         </div>
         </form>
 
@@ -2669,9 +2717,10 @@ Must be one of:
     \"event_time\": \"21:00\",
     \"category\": \"samba\",
     \"is_active\": true,
-    \"is_featured\": true,
+    \"is_featured\": false,
     \"spotify_url\": \"https:\\/\\/open.spotify.com\\/playlist\\/exemplo\",
-    \"age_restriction\": \"none\"
+    \"age_restriction\": \"none\",
+    \"benefit\": \"1 drink grátis na entrada\"
 }"
 </code></pre></div>
 
@@ -2693,9 +2742,10 @@ let body = {
     "event_time": "21:00",
     "category": "samba",
     "is_active": true,
-    "is_featured": true,
+    "is_featured": false,
     "spotify_url": "https:\/\/open.spotify.com\/playlist\/exemplo",
-    "age_restriction": "none"
+    "age_restriction": "none",
+    "benefit": "1 drink grátis na entrada"
 };
 
 fetch(url, {
@@ -2895,7 +2945,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>true</code></p>
+<p>Define se o evento aparece em "Não pode perder". Apenas bares premium. Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>spotify_url</code></b>&nbsp;&nbsp;
@@ -2919,9 +2969,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="none"
                data-component="body">
     <br>
-<p>Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21). Example: <code>none</code></p>
+<p>Classificação etária: none (livre), 18 ou 21. Example: <code>none</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>none</code></li> <li><code>18</code></li> <li><code>21</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>benefit</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="benefit"                data-endpoint="DELETEapi-events--event_id-"
+               value="1 drink grátis na entrada"
+               data-component="body">
+    <br>
+<p>Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters. Example: <code>1 drink grátis na entrada</code></p>
         </div>
         </form>
 
@@ -3734,6 +3796,627 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                <h1 id="check-in">Check-in</h1>
+
+    <p>Endpoints para gerenciamento de check-in em eventos.
+O self-checkin pode ser feito via QR Code ou pelo botão no app.</p>
+
+                                <h2 id="check-in-POSTapi-events--event_id--self-checkin">Self check-in</h2>
+
+<p>
+</p>
+
+<p>O próprio usuário realiza o check-in ao escanear o QR Code
+ou clicar no botão "Faça seu check-in" dentro do evento.
+O benefício é liberado automaticamente após a confirmação.</p>
+
+<span id="example-requests-POSTapi-events--event_id--self-checkin">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/events/1/self-checkin" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/self-checkin"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-events--event_id--self-checkin">
+</span>
+<span id="execution-results-POSTapi-events--event_id--self-checkin" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-events--event_id--self-checkin"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-events--event_id--self-checkin"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-events--event_id--self-checkin" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-events--event_id--self-checkin">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-events--event_id--self-checkin" data-method="POST"
+      data-path="api/events/{event_id}/self-checkin"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-events--event_id--self-checkin', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-events--event_id--self-checkin"
+                    onclick="tryItOut('POSTapi-events--event_id--self-checkin');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-events--event_id--self-checkin"
+                    onclick="cancelTryOut('POSTapi-events--event_id--self-checkin');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-events--event_id--self-checkin"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/events/{event_id}/self-checkin</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-events--event_id--self-checkin"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-events--event_id--self-checkin"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="POSTapi-events--event_id--self-checkin"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="POSTapi-events--event_id--self-checkin"
+               value="3"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>3</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="check-in-GETapi-events--event_id--my-checkin">Dados do check-in do usuário</h2>
+
+<p>
+</p>
+
+<p>Retorna os dados para exibição na tela de resgate após o check-in.
+Exibe nome, CPF, data de nascimento, status e benefício.
+Usado tanto no fluxo do QR Code quanto no botão do app.</p>
+
+<span id="example-requests-GETapi-events--event_id--my-checkin">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/events/1/my-checkin" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/my-checkin"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-events--event_id--my-checkin">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-events--event_id--my-checkin" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-events--event_id--my-checkin"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-events--event_id--my-checkin"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-events--event_id--my-checkin" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-events--event_id--my-checkin">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-events--event_id--my-checkin" data-method="GET"
+      data-path="api/events/{event_id}/my-checkin"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-events--event_id--my-checkin', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-events--event_id--my-checkin"
+                    onclick="tryItOut('GETapi-events--event_id--my-checkin');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-events--event_id--my-checkin"
+                    onclick="cancelTryOut('GETapi-events--event_id--my-checkin');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-events--event_id--my-checkin"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/events/{event_id}/my-checkin</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-events--event_id--my-checkin"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-events--event_id--my-checkin"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="GETapi-events--event_id--my-checkin"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="GETapi-events--event_id--my-checkin"
+               value="3"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>3</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="check-in-POSTapi-events--event_id--checkin--user_id-">Confirmar check-in manualmente</h2>
+
+<p>
+</p>
+
+<p>O bar_owner confirma a presença de um usuário inscrito no evento.
+Alternativa ao self-checkin para casos especiais.</p>
+
+<span id="example-requests-POSTapi-events--event_id--checkin--user_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/events/1/checkin/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/checkin/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-events--event_id--checkin--user_id-">
+</span>
+<span id="execution-results-POSTapi-events--event_id--checkin--user_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-events--event_id--checkin--user_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-events--event_id--checkin--user_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-events--event_id--checkin--user_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-events--event_id--checkin--user_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-events--event_id--checkin--user_id-" data-method="POST"
+      data-path="api/events/{event_id}/checkin/{user_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-events--event_id--checkin--user_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-events--event_id--checkin--user_id-"
+                    onclick="tryItOut('POSTapi-events--event_id--checkin--user_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-events--event_id--checkin--user_id-"
+                    onclick="cancelTryOut('POSTapi-events--event_id--checkin--user_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-events--event_id--checkin--user_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/events/{event_id}/checkin/{user_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user_id"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the user. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="3"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>3</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="user"                data-endpoint="POSTapi-events--event_id--checkin--user_id-"
+               value="2"
+               data-component="url">
+    <br>
+<p>ID do usuário. Example: <code>2</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="check-in-GETapi-events--event_id--checkins">Listar check-ins do evento</h2>
+
+<p>
+</p>
+
+<p>Retorna a lista de usuários que fizeram check-in no evento.
+Apenas o bar_owner dono do evento tem acesso.</p>
+
+<span id="example-requests-GETapi-events--event_id--checkins">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/events/1/checkins" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/checkins"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-events--event_id--checkins">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-events--event_id--checkins" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-events--event_id--checkins"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-events--event_id--checkins"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-events--event_id--checkins" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-events--event_id--checkins">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-events--event_id--checkins" data-method="GET"
+      data-path="api/events/{event_id}/checkins"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-events--event_id--checkins', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-events--event_id--checkins"
+                    onclick="tryItOut('GETapi-events--event_id--checkins');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-events--event_id--checkins"
+                    onclick="cancelTryOut('GETapi-events--event_id--checkins');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-events--event_id--checkins"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/events/{event_id}/checkins</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-events--event_id--checkins"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-events--event_id--checkins"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="GETapi-events--event_id--checkins"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="GETapi-events--event_id--checkins"
+               value="3"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>3</code></p>
             </div>
                     </form>
 

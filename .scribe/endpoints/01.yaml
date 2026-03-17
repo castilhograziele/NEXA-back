@@ -184,7 +184,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":null,"event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-16T19:46:46.000000Z","updated_at":"2026-03-16T19:50:14.000000Z","is_featured":false,"spotify_url":null,"age_restriction":"18","bar":{"id":1,"user_id":1,"name":"Bar Teste","cnpj":"12345678000195","phone":null,"city":null,"address":null,"instagram":null,"description":null,"created_at":"2026-03-16T19:46:20.000000Z","updated_at":"2026-03-16T19:46:20.000000Z","plan":"premium","whatsapp":null}},"message":""}'
+        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":null,"event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-16T19:46:46.000000Z","updated_at":"2026-03-16T19:50:14.000000Z","is_featured":false,"spotify_url":null,"age_restriction":"18","benefit":null,"bar":{"id":1,"user_id":1,"name":"Bar Teste","cnpj":"12345678000195","phone":null,"city":null,"address":null,"instagram":null,"description":null,"created_at":"2026-03-16T19:46:20.000000Z","updated_at":"2026-03-16T19:46:20.000000Z","plan":"premium","whatsapp":null}},"message":""}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -301,7 +301,7 @@ endpoints:
         name: is_featured
         description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -321,7 +321,7 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21).'
+        description: 'Classificação etária: none (livre), 18 ou 21.'
         required: false
         example: none
         type: string
@@ -332,6 +332,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Ex: 1 drink grátis, entrada gratuita. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -339,9 +350,10 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
-      is_featured: true
+      is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'
       age_restriction: none
+      benefit: '1 drink grátis na entrada'
     fileParameters: []
     responses: []
     responseFields: []
@@ -459,7 +471,7 @@ endpoints:
         name: is_featured
         description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -479,7 +491,7 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21).'
+        description: 'Classificação etária: none (livre), 18 ou 21.'
         required: false
         example: none
         type: string
@@ -490,6 +502,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -497,9 +520,10 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
-      is_featured: true
+      is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'
       age_restriction: none
+      benefit: '1 drink grátis na entrada'
     fileParameters: []
     responses: []
     responseFields: []
@@ -615,7 +639,7 @@ endpoints:
         name: is_featured
         description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -635,7 +659,7 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21).'
+        description: 'Classificação etária: none (livre), 18 ou 21.'
         required: false
         example: none
         type: string
@@ -646,6 +670,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       title: 'Show de Samba ao Vivo'
       description: 'Uma noite incrível de samba ao vivo.'
@@ -653,9 +688,10 @@ endpoints:
       event_time: '21:00'
       category: samba
       is_active: true
-      is_featured: true
+      is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'
       age_restriction: none
+      benefit: '1 drink grátis na entrada'
     fileParameters: []
     responses: []
     responseFields: []

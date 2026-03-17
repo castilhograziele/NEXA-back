@@ -4,14 +4,29 @@ namespace App\Http\Requests\Event;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Validação para atualização de eventos.
+ *
+ * Apenas o bar_owner dono do evento pode editar.
+ * Funcionalidades premium são validadas no EventService.
+ */
 class UpdateEventRequest extends FormRequest
 {
+    /**
+     * Apenas o bar_owner dono do evento pode editar.
+     */
     public function authorize(): bool
     {
         return $this->user()->hasRole('bar_owner') &&
                $this->user()->bar?->id === $this->route('event')->bar_id;
     }
 
+    /**
+     * Regras de validação para atualização de evento.
+     * Todos os campos são opcionais — atualiza apenas o que for enviado.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         return [
@@ -24,9 +39,15 @@ class UpdateEventRequest extends FormRequest
             'is_featured'     => ['nullable', 'boolean'],
             'spotify_url'     => ['nullable', 'url', 'max:255'],
             'age_restriction' => ['nullable', 'in:none,18,21'],
+            'benefit'         => ['nullable', 'string', 'max:255'],
         ];
     }
 
+    /**
+     * Exemplos para a documentação do Scribe.
+     *
+     * @return array<string, mixed>
+     */
     public function bodyParameters(): array
     {
         return [
@@ -56,15 +77,19 @@ class UpdateEventRequest extends FormRequest
             ],
             'is_featured' => [
                 'description' => 'Define se o evento aparece em "Não pode perder". Apenas bares premium.',
-                'example'     => true,
+                'example'     => false,
             ],
             'spotify_url' => [
                 'description' => 'Link da playlist do Spotify. Apenas bares premium.',
                 'example'     => 'https://open.spotify.com/playlist/exemplo',
             ],
             'age_restriction' => [
-                'description' => 'Classificação etária do evento: none (livre), 18 (maiores de 18) ou 21 (maiores de 21).',
+                'description' => 'Classificação etária: none (livre), 18 ou 21.',
                 'example'     => 'none',
+            ],
+            'benefit' => [
+                'description' => 'Benefício oferecido ao usuário que fizer check-in.',
+                'example'     => '1 drink grátis na entrada',
             ],
         ];
     }

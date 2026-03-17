@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Event;
 use App\Models\EventSubscription;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\ValidationException;
 
@@ -82,5 +83,125 @@ class EventSubscriptionService
                     ->where('is_active', true)
                     ->orderBy('event_date')
                     ->paginate(10);
+    }
+
+    /**
+     * Confirma o check-in de um usuário em um evento.
+     *
+     * Apenas o bar_owner dono do evento pode confirmar check-ins.
+     * O benefício é liberado após a confirmação.
+     *
+     * @throws ValidationException
+     */
+    public function checkin(Event $event, User $user): EventSubscription
+    {
+        $subscription = EventSubscription::where('event_id', $event->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$subscription) {
+            throw ValidationException::withMessages([
+                'user' => ['Este usuário não está inscrito neste evento.'],
+            ]);
+        }
+
+        if ($subscription->isCheckedIn()) {
+            throw ValidationException::withMessages([
+                'user' => ['Este usuário já fez check-in neste evento.'],
+            ]);
+        }
+
+        // Registra o check-in com data e hora atual
+        $subscription->update([
+            'checked_in'    => true,
+            'checked_in_at' => now(),
+        ]);
+
+        return $subscription->fresh();
+    }
+
+    /**
+     * Retorna a lista de check-ins confirmados de um evento.
+     *
+     * Inclui dados do usuário para facilitar a identificação na entrada.
+     */
+    public function eventCheckins(Event $event): Collection
+    {
+        return $event->subscriptions()
+                     ->with('user:id,name,phone')
+                     ->where('checked_in', true)
+                     ->orderBy('checked_in_at')
+                     ->get();
+    }
+
+    /**
+     * Realiza o check-in do próprio usuário autenticado.
+     *
+     * Chamado quando o usuário escaneia o QR Code ou clica no botão
+     * "Faça seu check-in" dentro do evento no app.
+     *
+     * @throws ValidationException
+     */
+    public function selfCheckin(User $user, Event $event): EventSubscription
+    {
+        $subscription = EventSubscription::where('event_id', $event->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$subscription) {
+            throw ValidationException::withMessages([
+                'event' => ['Você não está inscrito neste evento.'],
+            ]);
+        }
+
+        if ($subscription->isCheckedIn()) {
+            throw ValidationException::withMessages([
+                'event' => ['Você já realizou o check-in neste evento.'],
+            ]);
+        }
+
+        $subscription->update([
+            'checked_in'    => true,
+            'checked_in_at' => now(),
+        ]);
+
+        return $subscription->fresh();
+    }
+
+    /**
+     * Retorna os dados do check-in do usuário autenticado para a tela de resgate.
+     *
+     * Exibe nome, CPF, data de nascimento, status e benefício.
+     * Usado tanto no fluxo do QR Code quanto no botão do app.
+     *
+     * @throws ValidationException
+     */
+    public function myCheckin(User $user, Event $event): array
+    {
+        $subscription = EventSubscription::where('event_id', $event->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$subscription) {
+            throw ValidationException::withMessages([
+                'event' => ['Você não está inscrito neste evento.'],
+            ]);
+        }
+
+        return [
+            'user' => [
+                'name'       => $user->name,
+                'cpf'        => $user->cpf,
+                'birth_date' => $user->birth_date?->format('d/m/Y'),
+            ],
+            'checkin' => [
+                'status'        => $subscription->isCheckedIn() ? 'confirmado' : 'pendente',
+                'checked_in_at' => $subscription->checked_in_at?->format('d/m/Y H:i'),
+            ],
+            'event' => [
+                'title'   => $event->title,
+                'benefit' => $event->benefit ?? 'Nenhum benefício cadastrado.',
+            ],
+        ];
     }
 }
