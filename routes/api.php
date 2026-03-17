@@ -12,6 +12,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarController;
+use App\Http\Controllers\BarPhotoController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventSubscriptionController;
 use App\Http\Controllers\MetricsController;
@@ -28,13 +29,14 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
 });
 
 /**
- * Rotas públicas de eventos
+ * Rotas públicas de eventos e fotos
  * Acessíveis sem autenticação com rate limit generoso
  */
 Route::middleware('throttle:api-public')->group(function () {
-    Route::get('/events',          [EventController::class, 'index']);
-    Route::get('/events/featured', [EventController::class, 'featured']);
-    Route::get('/events/{event}',  [EventController::class, 'show']);
+    Route::get('/events',                    [EventController::class, 'index']);
+    Route::get('/events/featured',           [EventController::class, 'featured']);
+    Route::get('/events/{event}',            [EventController::class, 'show']);
+    Route::get('/bars/{bar}/photos',         [BarPhotoController::class, 'listGalleryPhotos']);
 });
 
 /**
@@ -59,6 +61,11 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     Route::get('/bars/{bar}', [BarController::class, 'show']);
     Route::put('/bars/{bar}', [BarController::class, 'update']);
 
+    /** Fotos do bar */
+    Route::post('/bars/{bar}/photo',                    [BarPhotoController::class, 'uploadProfilePhoto']);
+    Route::post('/bars/{bar}/photos',                   [BarPhotoController::class, 'addGalleryPhoto']);
+    Route::delete('/bars/{bar}/photos/{photo}',         [BarPhotoController::class, 'removeGalleryPhoto']);
+
     /** Gestão de eventos */
     Route::post('/events',           [EventController::class, 'store']);
     Route::put('/events/{event}',    [EventController::class, 'update']);
@@ -70,10 +77,10 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     Route::get('/events/{event}/subscription-status', [EventSubscriptionController::class, 'checkStatus']);
 
     /** Check-in via QR Code ou botão no app — feito pelo próprio usuário */
-    Route::post('/events/{event}/self-checkin',   [CheckinController::class, 'selfCheckin']);
-    Route::get('/events/{event}/my-checkin',      [CheckinController::class, 'myCheckin']);
+    Route::post('/events/{event}/self-checkin', [CheckinController::class, 'selfCheckin']);
+    Route::get('/events/{event}/my-checkin',    [CheckinController::class, 'myCheckin']);
 
     /** Check-in manual e listagem — apenas bar_owner */
     Route::post('/events/{event}/checkin/{user}', [CheckinController::class, 'checkin']);
-    Route::get('/events/{event}/checkins',        [CheckinController::class, 'eventCheckins']);
+    Route::get('/events/{event}/checkins',         [CheckinController::class, 'eventCheckins']);
 });
