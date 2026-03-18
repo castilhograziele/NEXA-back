@@ -2,28 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\DashboardService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @group Dashboard
+ *
+ * Endpoint consolidado da dashboard do bar_owner.
+ * Retorna todos os dados necessários em uma única chamada.
+ */
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        // pega o usuário logado
-        $user = auth()->user();
+    /**
+     * @param DashboardService $dashboardService
+     */
+    public function __construct(private DashboardService $dashboardService) {}
 
-        // se o usuário ainda não tem bar cadastrado
-        if (!$user->bar) {
-            // redireciona para a tela de cadastro do bar
-            return redirect('/bar/create');
+    /**
+     * Dashboard do bar_owner
+     *
+     * Retorna em uma única chamada todos os dados da dashboard:
+     * dados do bar, eventos ativos, métricas do mês e check-ins recentes.
+     * Apenas bar_owners autenticados têm acesso.
+     */
+    public function index(Request $request): JsonResponse
+    {
+        // Verifica se o usuário é bar_owner
+        if (!$request->user()->hasRole('bar_owner')) {
+            return response()->json([
+                'success' => false,
+                'data'    => null,
+                'message' => 'Apenas donos de bar têm acesso à dashboard.',
+            ], 403);
         }
 
-        // recupera o bar do usuário
-        $bar = $user->bar;
+        $data = $this->dashboardService->getDashboardData($request->user());
 
-        // busca todos os eventos vinculados a esse bar
-        $events = $bar->events;
-
-        // envia os dados do bar e eventos para a view da dashboard
-        return view('dashboard', compact('bar', 'events'));
+        return response()->json([
+            'success' => true,
+            'data'    => $data,
+            'message' => '',
+        ]);
     }
 }

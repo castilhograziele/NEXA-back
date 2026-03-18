@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarPhotoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventPhotoController;
 use App\Http\Controllers\EventSubscriptionController;
 use App\Http\Controllers\MetricsController;
 use App\Http\Controllers\CheckinController;
@@ -33,10 +35,10 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
  * Acessíveis sem autenticação com rate limit generoso
  */
 Route::middleware('throttle:api-public')->group(function () {
-    Route::get('/events',                    [EventController::class, 'index']);
-    Route::get('/events/featured',           [EventController::class, 'featured']);
-    Route::get('/events/{event}',            [EventController::class, 'show']);
-    Route::get('/bars/{bar}/photos',         [BarPhotoController::class, 'listGalleryPhotos']);
+    Route::get('/events',            [EventController::class, 'index']);
+    Route::get('/events/featured',   [EventController::class, 'featured']);
+    Route::get('/events/{event}',    [EventController::class, 'show']);
+    Route::get('/bars/{bar}/photos', [BarPhotoController::class, 'listGalleryPhotos']);
 });
 
 /**
@@ -48,6 +50,9 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     /** Sessão do usuário autenticado */
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/me',           [AuthController::class, 'me']);
+
+    /** Dashboard consolidada do bar_owner */
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
     /** Histórico de inscrições do usuário autenticado */
     Route::get('/me/subscriptions', [EventSubscriptionController::class, 'mySubscriptions']);
@@ -62,14 +67,18 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     Route::put('/bars/{bar}', [BarController::class, 'update']);
 
     /** Fotos do bar */
-    Route::post('/bars/{bar}/photo',                    [BarPhotoController::class, 'uploadProfilePhoto']);
-    Route::post('/bars/{bar}/photos',                   [BarPhotoController::class, 'addGalleryPhoto']);
-    Route::delete('/bars/{bar}/photos/{photo}',         [BarPhotoController::class, 'removeGalleryPhoto']);
+    Route::post('/bars/{bar}/photo',            [BarPhotoController::class, 'uploadProfilePhoto']);
+    Route::post('/bars/{bar}/photos',           [BarPhotoController::class, 'addGalleryPhoto']);
+    Route::delete('/bars/{bar}/photos/{photo}', [BarPhotoController::class, 'removeGalleryPhoto']);
 
     /** Gestão de eventos */
     Route::post('/events',           [EventController::class, 'store']);
     Route::put('/events/{event}',    [EventController::class, 'update']);
     Route::delete('/events/{event}', [EventController::class, 'destroy']);
+
+    /** Cartaz do evento — apenas premium */
+    Route::post('/events/{event}/poster',   [EventPhotoController::class, 'uploadPoster']);
+    Route::delete('/events/{event}/poster', [EventPhotoController::class, 'removePoster']);
 
     /** Inscrições em eventos */
     Route::post('/events/{event}/subscribe',          [EventSubscriptionController::class, 'subscribe']);

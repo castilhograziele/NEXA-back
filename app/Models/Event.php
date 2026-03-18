@@ -5,7 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Model de evento.
+ *
+ * Representa um evento criado por um bar_owner.
+ * Eventos podem ter classificação etária, benefícios e cartaz de divulgação.
+ */
 class Event extends Model
 {
     protected $fillable = [
@@ -20,7 +27,18 @@ class Event extends Model
         'spotify_url',
         'age_restriction',
         'benefit',
+        'poster',
     ];
+
+    /**
+     * Retorna a URL pública do cartaz do evento.
+     *
+     * Retorna null se nenhum cartaz estiver cadastrado.
+     */
+    public function getPosterUrlAttribute(): ?string
+    {
+        return $this->poster ? Storage::url($this->poster) : null;
+    }
 
     /**
      * Verifica se o usuário tem idade suficiente para o evento.

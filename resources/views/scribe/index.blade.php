@@ -161,6 +161,19 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-cartaz-do-evento" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="cartaz-do-evento">
+                    <a href="#cartaz-do-evento">Cartaz do Evento</a>
+                </li>
+                                    <ul id="tocify-subheader-cartaz-do-evento" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="cartaz-do-evento-POSTapi-events--event_id--poster">
+                                <a href="#cartaz-do-evento-POSTapi-events--event_id--poster">Upload do cartaz</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="cartaz-do-evento-DELETEapi-events--event_id--poster">
+                                <a href="#cartaz-do-evento-DELETEapi-events--event_id--poster">Remover cartaz</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-check-in" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="check-in">
                     <a href="#check-in">Check-in</a>
@@ -180,6 +193,35 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-dashboard" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="dashboard">
+                    <a href="#dashboard">Dashboard</a>
+                </li>
+                                    <ul id="tocify-subheader-dashboard" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="dashboard-GETapi-dashboard">
+                                <a href="#dashboard-GETapi-dashboard">Dashboard do bar_owner</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-fotos-do-bar" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="fotos-do-bar">
+                    <a href="#fotos-do-bar">Fotos do Bar</a>
+                </li>
+                                    <ul id="tocify-subheader-fotos-do-bar" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="fotos-do-bar-GETapi-bars--bar_id--photos">
+                                <a href="#fotos-do-bar-GETapi-bars--bar_id--photos">Listar fotos da galeria</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="fotos-do-bar-POSTapi-bars--bar_id--photo">
+                                <a href="#fotos-do-bar-POSTapi-bars--bar_id--photo">Upload de foto de perfil</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="fotos-do-bar-POSTapi-bars--bar_id--photos">
+                                <a href="#fotos-do-bar-POSTapi-bars--bar_id--photos">Adicionar foto na galeria</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="fotos-do-bar-DELETEapi-bars--bar_id--photos--photo_id-">
+                                <a href="#fotos-do-bar-DELETEapi-bars--bar_id--photos--photo_id-">Remover foto da galeria</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
             </div>
 
     <ul class="toc-footer" id="toc-footer">
@@ -189,7 +231,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Atualizado em: 17/03/2026</li>
+        <li>Atualizado em: 18/03/2026</li>
     </ul>
 </div>
 
@@ -964,6 +1006,7 @@ Apenas usuários com role bar_owner podem cadastrar um bar.</p>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"Bar do Zé\",
+    \"razao_social\": \"José da Silva ME\",
     \"cnpj\": \"12345678000195\",
     \"phone\": \"54999999999\",
     \"city\": \"Passo Fundo\",
@@ -987,6 +1030,7 @@ const headers = {
 
 let body = {
     "name": "Bar do Zé",
+    "razao_social": "José da Silva ME",
     "cnpj": "12345678000195",
     "phone": "54999999999",
     "city": "Passo Fundo",
@@ -1088,7 +1132,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="Bar do Zé"
                data-component="body">
     <br>
-<p>Nome do bar. Must not be greater than 255 characters. Example: <code>Bar do Zé</code></p>
+<p>Nome fantasia do bar. Must not be greater than 255 characters. Example: <code>Bar do Zé</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>razao_social</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="razao_social"                data-endpoint="POSTapi-bars"
+               value="José da Silva ME"
+               data-component="body">
+    <br>
+<p>Razão social do estabelecimento. Must not be greater than 255 characters. Example: <code>José da Silva ME</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cnpj</code></b>&nbsp;&nbsp;
@@ -1339,6 +1395,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"Bar do Zé\",
+    \"razao_social\": \"José da Silva ME\",
     \"phone\": \"54999999999\",
     \"city\": \"Passo Fundo\",
     \"address\": \"Rua Morom, 123\",
@@ -1361,6 +1418,7 @@ const headers = {
 
 let body = {
     "name": "Bar do Zé",
+    "razao_social": "José da Silva ME",
     "phone": "54999999999",
     "city": "Passo Fundo",
     "address": "Rua Morom, 123",
@@ -1474,7 +1532,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="Bar do Zé"
                data-component="body">
     <br>
-<p>Nome do bar. Must not be greater than 255 characters. Example: <code>Bar do Zé</code></p>
+<p>Nome fantasia do bar. Must not be greater than 255 characters. Example: <code>Bar do Zé</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>razao_social</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="razao_social"                data-endpoint="PUTapi-bars--bar_id-"
+               value="José da Silva ME"
+               data-component="body">
+    <br>
+<p>Razão social do estabelecimento. Must not be greater than 255 characters. Example: <code>José da Silva ME</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
@@ -2012,6 +2082,7 @@ access-control-allow-credentials: true
         &quot;spotify_url&quot;: null,
         &quot;age_restriction&quot;: &quot;18&quot;,
         &quot;benefit&quot;: null,
+        &quot;poster&quot;: null,
         &quot;bar&quot;: {
             &quot;id&quot;: 1,
             &quot;user_id&quot;: 1,
@@ -2023,9 +2094,11 @@ access-control-allow-credentials: true
             &quot;instagram&quot;: null,
             &quot;description&quot;: null,
             &quot;created_at&quot;: &quot;2026-03-16T19:46:20.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2026-03-16T19:46:20.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2026-03-17T22:25:16.000000Z&quot;,
             &quot;plan&quot;: &quot;premium&quot;,
-            &quot;whatsapp&quot;: null
+            &quot;whatsapp&quot;: null,
+            &quot;razao_social&quot;: &quot;Jos&eacute; da Silva ME&quot;,
+            &quot;photo&quot;: &quot;bars/profiles/nkMiTxyjuKl7EZdrtgcZSsAVlpCV2lKW5GjjWGml.png&quot;
         }
     },
     &quot;message&quot;: &quot;&quot;
@@ -3799,6 +3872,303 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                <h1 id="cartaz-do-evento">Cartaz do Evento</h1>
+
+    <p>Endpoints para upload e remoção do cartaz de divulgação do evento.
+Exclusivo para bares com plano premium.</p>
+
+                                <h2 id="cartaz-do-evento-POSTapi-events--event_id--poster">Upload do cartaz</h2>
+
+<p>
+</p>
+
+<p>Faz upload do cartaz de divulgação do evento.
+Substitui o cartaz anterior se existir.
+Exclusivo para bares com plano premium.</p>
+
+<span id="example-requests-POSTapi-events--event_id--poster">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/events/1/poster" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "poster=@C:\Users\Grazi\AppData\Local\Temp\php34A1.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/poster"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('poster', document.querySelector('input[name="poster"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-events--event_id--poster">
+</span>
+<span id="execution-results-POSTapi-events--event_id--poster" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-events--event_id--poster"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-events--event_id--poster"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-events--event_id--poster" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-events--event_id--poster">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-events--event_id--poster" data-method="POST"
+      data-path="api/events/{event_id}/poster"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-events--event_id--poster', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-events--event_id--poster"
+                    onclick="tryItOut('POSTapi-events--event_id--poster');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-events--event_id--poster"
+                    onclick="cancelTryOut('POSTapi-events--event_id--poster');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-events--event_id--poster"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/events/{event_id}/poster</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-events--event_id--poster"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-events--event_id--poster"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="POSTapi-events--event_id--poster"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="POSTapi-events--event_id--poster"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>poster</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="poster"                data-endpoint="POSTapi-events--event_id--poster"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be a file. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\Grazi\AppData\Local\Temp\php34A1.tmp</code></p>
+        </div>
+        </form>
+
+                    <h2 id="cartaz-do-evento-DELETEapi-events--event_id--poster">Remover cartaz</h2>
+
+<p>
+</p>
+
+<p>Remove o cartaz de divulgação do evento.
+Apenas o dono do bar pode remover.</p>
+
+<span id="example-requests-DELETEapi-events--event_id--poster">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/events/1/poster" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/events/1/poster"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-events--event_id--poster">
+</span>
+<span id="execution-results-DELETEapi-events--event_id--poster" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-events--event_id--poster"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-events--event_id--poster"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-events--event_id--poster" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-events--event_id--poster">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-events--event_id--poster" data-method="DELETE"
+      data-path="api/events/{event_id}/poster"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-events--event_id--poster', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-events--event_id--poster"
+                    onclick="tryItOut('DELETEapi-events--event_id--poster');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-events--event_id--poster"
+                    onclick="cancelTryOut('DELETEapi-events--event_id--poster');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-events--event_id--poster"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/events/{event_id}/poster</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-events--event_id--poster"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-events--event_id--poster"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event_id"                data-endpoint="DELETEapi-events--event_id--poster"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the event. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>event</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="event"                data-endpoint="DELETEapi-events--event_id--poster"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do evento. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                 <h1 id="check-in">Check-in</h1>
 
     <p>Endpoints para gerenciamento de check-in em eventos.
@@ -4417,6 +4787,811 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>ID do evento. Example: <code>3</code></p>
+            </div>
+                    </form>
+
+                <h1 id="dashboard">Dashboard</h1>
+
+    <p>Endpoint consolidado da dashboard do bar_owner.
+Retorna todos os dados necessários em uma única chamada.</p>
+
+                                <h2 id="dashboard-GETapi-dashboard">Dashboard do bar_owner</h2>
+
+<p>
+</p>
+
+<p>Retorna em uma única chamada todos os dados da dashboard:
+dados do bar, eventos ativos, métricas do mês e check-ins recentes.
+Apenas bar_owners autenticados têm acesso.</p>
+
+<span id="example-requests-GETapi-dashboard">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/dashboard" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/dashboard"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-dashboard">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-dashboard" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-dashboard"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-dashboard"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-dashboard" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-dashboard">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-dashboard" data-method="GET"
+      data-path="api/dashboard"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-dashboard', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-dashboard"
+                    onclick="tryItOut('GETapi-dashboard');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-dashboard"
+                    onclick="cancelTryOut('GETapi-dashboard');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-dashboard"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/dashboard</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-dashboard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-dashboard"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="fotos-do-bar">Fotos do Bar</h1>
+
+    <p>Endpoints para upload e gestão de fotos do bar.
+Foto de perfil disponível para todos os planos.
+Galeria de fotos exclusiva para plano premium.</p>
+
+                                <h2 id="fotos-do-bar-GETapi-bars--bar_id--photos">Listar fotos da galeria</h2>
+
+<p>
+</p>
+
+<p>Retorna todas as fotos da galeria do bar.
+Endpoint público — qualquer visitante pode ver.</p>
+
+<span id="example-requests-GETapi-bars--bar_id--photos">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/bars/1/photos" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/bars/1/photos"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-bars--bar_id--photos">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+x-ratelimit-limit: 60
+x-ratelimit-remaining: 59
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+access-control-allow-origin: http://localhost:3000
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;url&quot;: &quot;/storage/bars/gallery/teste.png&quot;,
+            &quot;caption&quot;: &quot;Teste&quot;,
+            &quot;order&quot;: 1
+        },
+        {
+            &quot;id&quot;: 2,
+            &quot;url&quot;: &quot;/storage/bars/gallery/uLKylpF4uZ3rGIUmp6e1DD3JruoD3ibSE9ODp52w.png&quot;,
+            &quot;caption&quot;: &quot;Ambiente do bar&quot;,
+            &quot;order&quot;: 2
+        }
+    ],
+    &quot;message&quot;: &quot;&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-bars--bar_id--photos" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-bars--bar_id--photos"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-bars--bar_id--photos"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-bars--bar_id--photos" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-bars--bar_id--photos">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-bars--bar_id--photos" data-method="GET"
+      data-path="api/bars/{bar_id}/photos"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-bars--bar_id--photos', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-bars--bar_id--photos"
+                    onclick="tryItOut('GETapi-bars--bar_id--photos');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-bars--bar_id--photos"
+                    onclick="cancelTryOut('GETapi-bars--bar_id--photos');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-bars--bar_id--photos"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/bars/{bar_id}/photos</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-bars--bar_id--photos"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-bars--bar_id--photos"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar_id"                data-endpoint="GETapi-bars--bar_id--photos"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bar. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar"                data-endpoint="GETapi-bars--bar_id--photos"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do bar. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="fotos-do-bar-POSTapi-bars--bar_id--photo">Upload de foto de perfil</h2>
+
+<p>
+</p>
+
+<p>Faz upload da foto de perfil do bar.
+Substitui a foto anterior se existir.
+Disponível para todos os planos.</p>
+
+<span id="example-requests-POSTapi-bars--bar_id--photo">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/bars/1/photo" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "photo=@C:\Users\Grazi\AppData\Local\Temp\php33D3.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/bars/1/photo"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('photo', document.querySelector('input[name="photo"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-bars--bar_id--photo">
+</span>
+<span id="execution-results-POSTapi-bars--bar_id--photo" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-bars--bar_id--photo"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-bars--bar_id--photo"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-bars--bar_id--photo" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-bars--bar_id--photo">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-bars--bar_id--photo" data-method="POST"
+      data-path="api/bars/{bar_id}/photo"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-bars--bar_id--photo', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-bars--bar_id--photo"
+                    onclick="tryItOut('POSTapi-bars--bar_id--photo');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-bars--bar_id--photo"
+                    onclick="cancelTryOut('POSTapi-bars--bar_id--photo');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-bars--bar_id--photo"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/bars/{bar_id}/photo</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-bars--bar_id--photo"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-bars--bar_id--photo"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar_id"                data-endpoint="POSTapi-bars--bar_id--photo"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bar. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar"                data-endpoint="POSTapi-bars--bar_id--photo"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do bar. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>photo</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="photo"                data-endpoint="POSTapi-bars--bar_id--photo"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be a file. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\Grazi\AppData\Local\Temp\php33D3.tmp</code></p>
+        </div>
+        </form>
+
+                    <h2 id="fotos-do-bar-POSTapi-bars--bar_id--photos">Adicionar foto na galeria</h2>
+
+<p>
+</p>
+
+<p>Adiciona uma foto na galeria de ambiente do bar.
+Apenas bares com plano premium podem usar a galeria.
+Limite de 10 fotos por galeria.</p>
+
+<span id="example-requests-POSTapi-bars--bar_id--photos">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/api/bars/1/photos" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "caption=b"\
+    --form "photo=@C:\Users\Grazi\AppData\Local\Temp\php3403.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/bars/1/photos"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('caption', 'b');
+body.append('photo', document.querySelector('input[name="photo"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-bars--bar_id--photos">
+</span>
+<span id="execution-results-POSTapi-bars--bar_id--photos" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-bars--bar_id--photos"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-bars--bar_id--photos"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-bars--bar_id--photos" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-bars--bar_id--photos">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-bars--bar_id--photos" data-method="POST"
+      data-path="api/bars/{bar_id}/photos"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-bars--bar_id--photos', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-bars--bar_id--photos"
+                    onclick="tryItOut('POSTapi-bars--bar_id--photos');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-bars--bar_id--photos"
+                    onclick="cancelTryOut('POSTapi-bars--bar_id--photos');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-bars--bar_id--photos"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/bars/{bar_id}/photos</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar_id"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bar. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do bar. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>photo</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="photo"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be a file. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\Grazi\AppData\Local\Temp\php3403.tmp</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>caption</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="caption"                data-endpoint="POSTapi-bars--bar_id--photos"
+               value="b"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>b</code></p>
+        </div>
+        </form>
+
+                    <h2 id="fotos-do-bar-DELETEapi-bars--bar_id--photos--photo_id-">Remover foto da galeria</h2>
+
+<p>
+</p>
+
+<p>Remove uma foto da galeria do bar.
+Apenas o dono do bar pode remover fotos.</p>
+
+<span id="example-requests-DELETEapi-bars--bar_id--photos--photo_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8000/api/bars/1/photos/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/bars/1/photos/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-bars--bar_id--photos--photo_id-">
+</span>
+<span id="execution-results-DELETEapi-bars--bar_id--photos--photo_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-bars--bar_id--photos--photo_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-bars--bar_id--photos--photo_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-bars--bar_id--photos--photo_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-bars--bar_id--photos--photo_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-bars--bar_id--photos--photo_id-" data-method="DELETE"
+      data-path="api/bars/{bar_id}/photos/{photo_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-bars--bar_id--photos--photo_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-bars--bar_id--photos--photo_id-"
+                    onclick="tryItOut('DELETEapi-bars--bar_id--photos--photo_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-bars--bar_id--photos--photo_id-"
+                    onclick="cancelTryOut('DELETEapi-bars--bar_id--photos--photo_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-bars--bar_id--photos--photo_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/bars/{bar_id}/photos/{photo_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar_id"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the bar. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>photo_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="photo_id"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the photo. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>bar</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="bar"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID do bar. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>photo</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="photo"                data-endpoint="DELETEapi-bars--bar_id--photos--photo_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>ID da foto. Example: <code>1</code></p>
             </div>
                     </form>
 

@@ -1,25 +1,23 @@
-name: Bars
+name: Inscrições
 description: |-
 
-  Endpoints para cadastro e gestão de bares.
+  Endpoints para inscrição e cancelamento em eventos.
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/bars
+      - GET
+    uri: api/me/subscriptions
     metadata:
       custom: []
-      groupName: Bars
+      groupName: Inscrições
       groupDescription: |-
 
-        Endpoints para cadastro e gestão de bares.
+        Endpoints para inscrição e cancelamento em eventos.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cadastrar bar'
-      description: |-
-        Cria um novo bar vinculado ao usuário autenticado.
-        Apenas usuários com role bar_owner podem cadastrar um bar.
+      title: 'Minhas inscrições'
+      description: 'Retorna a lista paginada de eventos em que o usuário está inscrito.'
       authenticated: false
       deprecated: false
     headers:
@@ -27,147 +25,6 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'Nome do bar. Must not be greater than 255 characters.'
-        required: true
-        example: 'Bar do Zé'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      cnpj:
-        custom: []
-        name: cnpj
-        description: 'CNPJ do bar (apenas números, 14 dígitos). Must be 14 characters.'
-        required: true
-        example: '12345678000195'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      phone:
-        custom: []
-        name: phone
-        description: 'Telefone de contato. Must not be greater than 20 characters.'
-        required: false
-        example: '54999999999'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      city:
-        custom: []
-        name: city
-        description: 'Cidade onde o bar está localizado. Must not be greater than 255 characters.'
-        required: false
-        example: 'Passo Fundo'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      address:
-        custom: []
-        name: address
-        description: 'Endereço completo do bar. Must not be greater than 255 characters.'
-        required: false
-        example: 'Rua Morom, 123'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      instagram:
-        custom: []
-        name: instagram
-        description: 'Perfil do Instagram do bar. Must not be greater than 255 characters.'
-        required: false
-        example: '@bardoze'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      whatsapp:
-        custom: []
-        name: whatsapp
-        description: 'Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters.'
-        required: false
-        example: '54999999999'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: 'Descrição do bar.'
-        required: false
-        example: 'O melhor bar da cidade!'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      name: 'Bar do Zé'
-      cnpj: '12345678000195'
-      phone: '54999999999'
-      city: 'Passo Fundo'
-      address: 'Rua Morom, 123'
-      instagram: '@bardoze'
-      whatsapp: '54999999999'
-      description: 'O melhor bar da cidade!'
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/bars/{bar_id}'
-    metadata:
-      custom: []
-      groupName: Bars
-      groupDescription: |-
-
-        Endpoints para cadastro e gestão de bares.
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Detalhes do bar'
-      description: 'Retorna os dados de um bar específico.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      bar_id:
-        custom: []
-        name: bar_id
-        description: 'The ID of the bar.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      bar_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -196,28 +53,28 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PUT
-    uri: 'api/bars/{bar_id}'
+      - POST
+    uri: 'api/events/{event_id}/subscribe'
     metadata:
       custom: []
-      groupName: Bars
+      groupName: Inscrições
       groupDescription: |-
 
-        Endpoints para cadastro e gestão de bares.
+        Endpoints para inscrição e cancelamento em eventos.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Atualizar bar'
-      description: 'Atualiza os dados do bar. Apenas o dono pode editar.'
+      title: 'Inscrever em evento'
+      description: 'Inscreve o usuário autenticado em um evento.'
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      bar_id:
+      event_id:
         custom: []
-        name: bar_id
-        description: 'The ID of the bar.'
+        name: event_id
+        description: 'The ID of the event.'
         required: true
         example: 1
         type: integer
@@ -226,97 +83,117 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      bar_id: 1
+      event_id: 1
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      name:
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/events/{event_id}/subscribe'
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cancelar inscrição'
+      description: 'Cancela a inscrição do usuário autenticado em um evento.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
         custom: []
-        name: name
-        description: 'Nome do bar. Must not be greater than 255 characters.'
-        required: false
-        example: 'Bar do Zé'
-        type: string
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      phone:
-        custom: []
-        name: phone
-        description: 'Telefone de contato. Must not be greater than 20 characters.'
-        required: false
-        example: '54999999999'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      city:
-        custom: []
-        name: city
-        description: 'Cidade onde o bar está localizado. Must not be greater than 255 characters.'
-        required: false
-        example: 'Passo Fundo'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      address:
-        custom: []
-        name: address
-        description: 'Endereço completo do bar. Must not be greater than 255 characters.'
-        required: false
-        example: 'Rua Morom, 123'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      instagram:
-        custom: []
-        name: instagram
-        description: 'Perfil do Instagram do bar. Must not be greater than 255 characters.'
-        required: false
-        example: '@bardoze'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      whatsapp:
-        custom: []
-        name: whatsapp
-        description: 'Número do WhatsApp para contato ou reservas. Must not be greater than 20 characters.'
-        required: false
-        example: '54999999999'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: 'Descrição do bar.'
-        required: false
-        example: 'O melhor bar da cidade!'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      name: 'Bar do Zé'
-      phone: '54999999999'
-      city: 'Passo Fundo'
-      address: 'Rua Morom, 123'
-      instagram: '@bardoze'
-      whatsapp: '54999999999'
-      description: 'O melhor bar da cidade!'
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}/subscription-status'
+    metadata:
+      custom: []
+      groupName: Inscrições
+      groupDescription: |-
+
+        Endpoints para inscrição e cancelamento em eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Status da inscrição'
+      description: 'Retorna se o usuário autenticado está inscrito em um evento.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
     responseFields: []
     auth: []
     controller: null
