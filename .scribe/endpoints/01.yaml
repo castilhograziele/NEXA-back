@@ -184,7 +184,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":null,"event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-16T19:46:46.000000Z","updated_at":"2026-03-16T19:50:14.000000Z","is_featured":false,"spotify_url":null,"age_restriction":"18","benefit":null,"poster":null,"bar":{"id":1,"user_id":1,"name":"Bar Teste","cnpj":"12345678000195","phone":null,"city":null,"address":null,"instagram":null,"description":null,"created_at":"2026-03-16T19:46:20.000000Z","updated_at":"2026-03-17T22:25:16.000000Z","plan":"premium","whatsapp":null,"razao_social":"Jos\u00e9 da Silva ME","photo":"bars\/profiles\/nkMiTxyjuKl7EZdrtgcZSsAVlpCV2lKW5GjjWGml.png"}},"message":""}'
+        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":null,"event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-16T19:46:46.000000Z","updated_at":"2026-03-16T19:50:14.000000Z","is_featured":false,"spotify_url":null,"age_restriction":"18","benefit":null,"poster":null,"music_style":null,"bar":{"id":1,"user_id":1,"name":"Bar Teste","cnpj":"12345678000195","phone":null,"city":null,"address":null,"instagram":null,"description":null,"created_at":"2026-03-16T19:46:20.000000Z","updated_at":"2026-03-17T22:25:16.000000Z","plan":"premium","whatsapp":null,"razao_social":"Jos\u00e9 da Silva ME","photo":"bars\/profiles\/nkMiTxyjuKl7EZdrtgcZSsAVlpCV2lKW5GjjWGml.png"}},"message":""}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -285,6 +285,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       is_active:
         custom: []
         name: is_active
@@ -321,21 +332,20 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária: none (livre), 18 ou 21.'
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
         required: false
         example: none
         type: string
         enumValues:
           - none
           - '18'
-          - '21'
         exampleWasSpecified: false
         nullable: true
         deprecated: false
       benefit:
         custom: []
         name: benefit
-        description: 'Benefício oferecido ao usuário que fizer check-in. Ex: 1 drink grátis, entrada gratuita. Must not be greater than 255 characters.'
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
         required: false
         example: '1 drink grátis na entrada'
         type: string
@@ -349,6 +359,7 @@ endpoints:
       event_date: '2026-04-15'
       event_time: '21:00'
       category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
       is_active: true
       is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'
@@ -455,6 +466,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       is_active:
         custom: []
         name: is_active
@@ -491,14 +513,13 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária: none (livre), 18 ou 21.'
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
         required: false
         example: none
         type: string
         enumValues:
           - none
           - '18'
-          - '21'
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -519,6 +540,7 @@ endpoints:
       event_date: '2026-04-15'
       event_time: '21:00'
       category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
       is_active: true
       is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'
@@ -623,6 +645,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
       is_active:
         custom: []
         name: is_active
@@ -659,14 +692,13 @@ endpoints:
       age_restriction:
         custom: []
         name: age_restriction
-        description: 'Classificação etária: none (livre), 18 ou 21.'
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
         required: false
         example: none
         type: string
         enumValues:
           - none
           - '18'
-          - '21'
         exampleWasSpecified: false
         nullable: true
         deprecated: false
@@ -687,6 +719,7 @@ endpoints:
       event_date: '2026-04-15'
       event_time: '21:00'
       category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
       is_active: true
       is_featured: false
       spotify_url: 'https://open.spotify.com/playlist/exemplo'

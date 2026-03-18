@@ -1,23 +1,25 @@
-name: Inscrições
+name: 'Perfil do Usuário'
 description: |-
 
-  Endpoints para inscrição e cancelamento em eventos.
+  Endpoints para gerenciamento do perfil do usuário comum.
+  Todos os endpoints exigem autenticação.
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/me/subscriptions
+    uri: api/me/profile
     metadata:
       custom: []
-      groupName: Inscrições
+      groupName: 'Perfil do Usuário'
       groupDescription: |-
 
-        Endpoints para inscrição e cancelamento em eventos.
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Minhas inscrições'
-      description: 'Retorna a lista paginada de eventos em que o usuário está inscrito.'
+      title: 'Dados do perfil'
+      description: 'Retorna os dados completos do perfil do usuário autenticado.'
       authenticated: false
       deprecated: false
     headers:
@@ -53,41 +55,68 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: 'api/events/{event_id}/subscribe'
+      - PUT
+    uri: api/me/profile
     metadata:
       custom: []
-      groupName: Inscrições
+      groupName: 'Perfil do Usuário'
       groupDescription: |-
 
-        Endpoints para inscrição e cancelamento em eventos.
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Inscrever em evento'
-      description: 'Inscreve o usuário autenticado em um evento.'
+      title: 'Atualizar perfil'
+      description: |-
+        Atualiza os dados do perfil do usuário autenticado.
+        Apenas os campos enviados serão atualizados.
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      event_id:
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
         custom: []
-        name: event_id
-        description: 'The ID of the event.'
-        required: true
-        example: 1
-        type: integer
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: b
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      event_id: 1
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+      email:
+        custom: []
+        name: email
+        description: 'Must be a valid email address. Must not be greater than 255 characters.'
+        required: false
+        example: zbailey@example.net
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      city:
+        custom: []
+        name: city
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: i
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: b
+      email: zbailey@example.net
+      city: i
     fileParameters: []
     responses: []
     responseFields: []
@@ -98,41 +127,202 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - DELETE
-    uri: 'api/events/{event_id}/subscribe'
+      - POST
+    uri: api/me/photo
     metadata:
       custom: []
-      groupName: Inscrições
+      groupName: 'Perfil do Usuário'
       groupDescription: |-
 
-        Endpoints para inscrição e cancelamento em eventos.
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Cancelar inscrição'
-      description: 'Cancela a inscrição do usuário autenticado em um evento.'
+      title: 'Upload de foto de perfil'
+      description: |-
+        Faz upload da foto de perfil do usuário.
+        Substitui a foto anterior se existir.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      photo:
+        custom: []
+        name: photo
+        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters: []
+    fileParameters:
+      photo: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me/history
+    metadata:
+      custom: []
+      groupName: 'Perfil do Usuário'
+      groupDescription: |-
+
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Histórico de eventos'
+      description: |-
+        Retorna os eventos que o usuário frequentou (check-in confirmado).
+        Paginado em 10 por página.
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      event_id:
-        custom: []
-        name: event_id
-        description: 'The ID of the event.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      event_id: 1
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me/recommendations
+    metadata:
+      custom: []
+      groupName: 'Perfil do Usuário'
+      groupDescription: |-
+
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Eventos recomendados'
+      description: |-
+        Retorna eventos recomendados baseados nas categorias que o usuário mais frequentou.
+        Se o usuário não tiver histórico, retorna os eventos em destaque.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: api/me/notifications
+    metadata:
+      custom: []
+      groupName: 'Perfil do Usuário'
+      groupDescription: |-
+
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Preferências de notificação'
+      description: 'Atualiza as preferências de notificação do usuário.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      notify_new_events:
+        custom: []
+        name: notify_new_events
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      notify_event_reminder:
+        custom: []
+        name: notify_event_reminder
+        description: ''
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      notify_new_events: false
+      notify_event_reminder: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -144,36 +334,27 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/events/{event_id}/subscription-status'
+    uri: api/me/category-preferences
     metadata:
       custom: []
-      groupName: Inscrições
+      groupName: 'Perfil do Usuário'
       groupDescription: |-
 
-        Endpoints para inscrição e cancelamento em eventos.
+        Endpoints para gerenciamento do perfil do usuário comum.
+        Todos os endpoints exigem autenticação.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Status da inscrição'
-      description: 'Retorna se o usuário autenticado está inscrito em um evento.'
+      title: 'Preferências de categoria'
+      description: |-
+        Retorna as categorias de eventos mais frequentadas pelo usuário.
+        Útil para personalizar recomendações no frontend.
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      event_id:
-        custom: []
-        name: event_id
-        description: 'The ID of the event.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      event_id: 1
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

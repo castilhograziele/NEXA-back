@@ -68,7 +68,7 @@ endpoints:
       birth_date:
         custom: []
         name: birth_date
-        description: 'Data de nascimento (formato Y-m-d). Must be a valid date.'
+        description: 'Data de nascimento (formato Y-m-d). Must be a valid date. Must be a date before <code>today</code>.'
         required: true
         example: '1990-05-15'
         type: string
@@ -92,7 +92,7 @@ endpoints:
       email:
         custom: []
         name: email
-        description: 'Obrigatório apenas para bar_owner, opcional para user. Must be a valid email address. Must not be greater than 255 characters.'
+        description: 'Obrigatório para bar_owner, opcional para user. Must be a valid email address. Must not be greater than 255 characters.'
         required: false
         example: joao@example.com
         type: string

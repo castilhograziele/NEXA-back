@@ -87,10 +87,17 @@ class EventService
      *
      * Funcionalidades premium: destaque no evento e link do Spotify.
      *
-     * @throws ValidationException
-     */
+    /**
+ * Verifica se o bar pode usar funcionalidades exclusivas do plano premium.
+ *
+ * Funcionalidades premium: destaque no evento e link do Spotify.
+ * Cartaz liberado para todos os planos.
+ *
+    * @throws ValidationException
+    */
     private function checkPremiumFeatures(Bar $bar, array $data): void
     {
+        // Apenas premium pode destacar eventos
         if (!empty($data['is_featured']) && $data['is_featured'] === true) {
             if (!$bar->isPremium()) {
                 throw ValidationException::withMessages([
@@ -99,6 +106,7 @@ class EventService
             }
         }
 
+        // Apenas premium pode adicionar link do Spotify
         if (!empty($data['spotify_url'])) {
             if (!$bar->isPremium()) {
                 throw ValidationException::withMessages([

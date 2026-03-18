@@ -1,0 +1,139 @@
+name: 'Cartaz do Evento'
+description: |-
+
+  Endpoints para upload e remoção do cartaz de divulgação do evento.
+  Exclusivo para bares com plano premium.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/events/{event_id}/poster'
+    metadata:
+      custom: []
+      groupName: 'Cartaz do Evento'
+      groupDescription: |-
+
+        Endpoints para upload e remoção do cartaz de divulgação do evento.
+        Exclusivo para bares com plano premium.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Upload do cartaz'
+      description: |-
+        Faz upload do cartaz de divulgação do evento.
+        Substitui o cartaz anterior se existir.
+        Exclusivo para bares com plano premium.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      poster:
+        custom: []
+        name: poster
+        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters: []
+    fileParameters:
+      poster: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/events/{event_id}/poster'
+    metadata:
+      custom: []
+      groupName: 'Cartaz do Evento'
+      groupDescription: |-
+
+        Endpoints para upload e remoção do cartaz de divulgação do evento.
+        Exclusivo para bares com plano premium.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remover cartaz'
+      description: |-
+        Remove o cartaz de divulgação do evento.
+        Apenas o dono do bar pode remover.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

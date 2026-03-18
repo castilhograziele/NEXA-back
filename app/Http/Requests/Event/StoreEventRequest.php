@@ -33,10 +33,11 @@ class StoreEventRequest extends FormRequest
             'event_date'      => ['required', 'date', 'after_or_equal:today'],
             'event_time'      => ['required', 'date_format:H:i'],
             'category'        => ['required', 'string', 'max:100'],
+            'music_style'     => ['nullable', 'string', 'max:255'],
             'is_active'       => ['nullable', 'boolean'],
             'is_featured'     => ['nullable', 'boolean'],
             'spotify_url'     => ['nullable', 'url', 'max:255'],
-            'age_restriction' => ['nullable', 'in:none,18,21'],
+            'age_restriction' => ['nullable', 'in:none,18'],
             'benefit'         => ['nullable', 'string', 'max:255'],
         ];
     }
@@ -69,6 +70,10 @@ class StoreEventRequest extends FormRequest
                 'description' => 'Categoria do evento.',
                 'example'     => 'samba',
             ],
+            'music_style' => [
+                'description' => 'O que vai tocar no evento. Texto livre.',
+                'example'     => 'Lady Gaga, Britney Spears, hits dos anos 2000',
+            ],
             'is_active' => [
                 'description' => 'Define se o evento está ativo.',
                 'example'     => true,
@@ -82,11 +87,11 @@ class StoreEventRequest extends FormRequest
                 'example'     => 'https://open.spotify.com/playlist/exemplo',
             ],
             'age_restriction' => [
-                'description' => 'Classificação etária: none (livre), 18 ou 21.',
+                'description' => 'Classificação etária: none (livre) ou 18 (maiores de 18).',
                 'example'     => 'none',
             ],
             'benefit' => [
-                'description' => 'Benefício oferecido ao usuário que fizer check-in. Ex: 1 drink grátis, entrada gratuita.',
+                'description' => 'Benefício oferecido ao usuário que fizer check-in.',
                 'example'     => '1 drink grátis na entrada',
             ],
         ];

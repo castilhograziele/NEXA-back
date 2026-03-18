@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Storage;
  * Model de evento.
  *
  * Representa um evento criado por um bar_owner.
- * Eventos podem ter classificação etária, benefícios e cartaz de divulgação.
+ * Eventos podem ter classificação etária, benefícios,
+ * cartaz de divulgação, estilo musical e avaliações.
  */
 class Event extends Model
 {
@@ -28,6 +29,7 @@ class Event extends Model
         'age_restriction',
         'benefit',
         'poster',
+        'music_style',
     ];
 
     /**
@@ -81,5 +83,13 @@ class Event extends Model
     public function views(): HasMany
     {
         return $this->hasMany(EventView::class);
+    }
+
+    /**
+     * Um evento pode ter várias avaliações.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(EventReview::class);
     }
 }

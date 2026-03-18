@@ -16,6 +16,7 @@ use App\Http\Controllers\BarPhotoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventPhotoController;
+use App\Http\Controllers\EventReviewController;
 use App\Http\Controllers\EventSubscriptionController;
 use App\Http\Controllers\MetricsController;
 use App\Http\Controllers\CheckinController;
@@ -36,10 +37,11 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
  * Acessíveis sem autenticação com rate limit generoso
  */
 Route::middleware('throttle:api-public')->group(function () {
-    Route::get('/events',            [EventController::class, 'index']);
-    Route::get('/events/featured',   [EventController::class, 'featured']);
-    Route::get('/events/{event}',    [EventController::class, 'show']);
-    Route::get('/bars/{bar}/photos', [BarPhotoController::class, 'listGalleryPhotos']);
+    Route::get('/events',                    [EventController::class, 'index']);
+    Route::get('/events/featured',           [EventController::class, 'featured']);
+    Route::get('/events/{event}',            [EventController::class, 'show']);
+    Route::get('/events/{event}/reviews',    [EventReviewController::class, 'index']);
+    Route::get('/bars/{bar}/photos',         [BarPhotoController::class, 'listGalleryPhotos']);
 });
 
 /**
@@ -53,13 +55,13 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     Route::get('/me',           [AuthController::class, 'me']);
 
     /** Perfil do usuário */
-    Route::get('/me/profile',                [UserController::class, 'profile']);
-    Route::put('/me/profile',                [UserController::class, 'updateProfile']);
-    Route::post('/me/photo',                 [UserController::class, 'uploadPhoto']);
-    Route::get('/me/history',                [UserController::class, 'eventHistory']);
-    Route::get('/me/recommendations',        [UserController::class, 'recommendedEvents']);
-    Route::put('/me/notifications',          [UserController::class, 'updateNotifications']);
-    Route::get('/me/category-preferences',   [UserController::class, 'categoryPreferences']);
+    Route::get('/me/profile',              [UserController::class, 'profile']);
+    Route::put('/me/profile',              [UserController::class, 'updateProfile']);
+    Route::post('/me/photo',               [UserController::class, 'uploadPhoto']);
+    Route::get('/me/history',              [UserController::class, 'eventHistory']);
+    Route::get('/me/recommendations',      [UserController::class, 'recommendedEvents']);
+    Route::put('/me/notifications',        [UserController::class, 'updateNotifications']);
+    Route::get('/me/category-preferences', [UserController::class, 'categoryPreferences']);
 
     /** Dashboard consolidada do bar_owner */
     Route::get('/dashboard', [DashboardController::class, 'index']);
@@ -86,9 +88,12 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     Route::put('/events/{event}',    [EventController::class, 'update']);
     Route::delete('/events/{event}', [EventController::class, 'destroy']);
 
-    /** Cartaz do evento — apenas premium */
+    /** Cartaz do evento */
     Route::post('/events/{event}/poster',   [EventPhotoController::class, 'uploadPoster']);
     Route::delete('/events/{event}/poster', [EventPhotoController::class, 'removePoster']);
+
+    /** Avaliações de eventos */
+    Route::post('/events/{event}/reviews', [EventReviewController::class, 'store']);
 
     /** Inscrições em eventos */
     Route::post('/events/{event}/subscribe',          [EventSubscriptionController::class, 'subscribe']);

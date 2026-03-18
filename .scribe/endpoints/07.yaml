@@ -1,77 +1,52 @@
-name: 'Cartaz do Evento'
+name: Métricas
 description: |-
 
-  Endpoints para upload e remoção do cartaz de divulgação do evento.
-  Exclusivo para bares com plano premium.
+  Endpoints para visualização de métricas do bar e eventos.
+  Apenas usuários com role bar_owner têm acesso.
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: 'api/events/{event_id}/poster'
+      - GET
+    uri: api/metrics/bar
     metadata:
       custom: []
-      groupName: 'Cartaz do Evento'
+      groupName: Métricas
       groupDescription: |-
 
-        Endpoints para upload e remoção do cartaz de divulgação do evento.
-        Exclusivo para bares com plano premium.
+        Endpoints para visualização de métricas do bar e eventos.
+        Apenas usuários com role bar_owner têm acesso.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Upload do cartaz'
-      description: |-
-        Faz upload do cartaz de divulgação do evento.
-        Substitui o cartaz anterior se existir.
-        Exclusivo para bares com plano premium.
+      title: 'Métricas do bar'
+      description: 'Retorna um resumo de visualizações e inscrições de todos os eventos do bar.'
       authenticated: false
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      event_id:
-        custom: []
-        name: event_id
-        description: 'The ID of the event.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      event:
-        custom: []
-        name: event
-        description: 'ID do evento.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      event_id: 1
-      event: 1
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      poster:
-        custom: []
-        name: poster
-        description: 'Must be a file. Must not be greater than 5120 kilobytes.'
-        required: true
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
+    bodyParameters: []
     cleanBodyParameters: []
-    fileParameters:
-      poster: null
-    responses: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
     responseFields: []
     auth: []
     controller: null
@@ -80,21 +55,21 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - DELETE
-    uri: 'api/events/{event_id}/poster'
+      - GET
+    uri: 'api/metrics/events/{event_id}'
     metadata:
       custom: []
-      groupName: 'Cartaz do Evento'
+      groupName: Métricas
       groupDescription: |-
 
-        Endpoints para upload e remoção do cartaz de divulgação do evento.
-        Exclusivo para bares com plano premium.
+        Endpoints para visualização de métricas do bar e eventos.
+        Apenas usuários com role bar_owner têm acesso.
       subgroup: ''
       subgroupDescription: ''
-      title: 'Remover cartaz'
+      title: 'Métricas do evento'
       description: |-
-        Remove o cartaz de divulgação do evento.
-        Apenas o dono do bar pode remover.
+        Retorna métricas detalhadas de um evento, incluindo lista de inscritos.
+        Apenas o dono do bar pode ver as métricas do seu evento.
       authenticated: false
       deprecated: false
     headers:
@@ -112,26 +87,28 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      event:
-        custom: []
-        name: event
-        description: 'ID do evento.'
-        required: true
-        example: 1
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       event_id: 1
-      event: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
     responseFields: []
     auth: []
     controller: null
