@@ -5,13 +5,28 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+/**
+ * Validação para cadastro de usuário.
+ *
+ * Regras diferenciadas por role:
+ * - user: CPF obrigatório, email opcional
+ * - bar_owner: CPF obrigatório, email obrigatório
+ */
 class RegisterRequest extends FormRequest
 {
+    /**
+     * Qualquer visitante pode se cadastrar.
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Regras de validação para cadastro.
+     *
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
         $rules = [
@@ -24,7 +39,7 @@ class RegisterRequest extends FormRequest
                 Rule::unique('users', 'phone'),
             ],
 
-            // CPF apenas números, 11 dígitos
+            // CPF obrigatório para todos — identifica a pessoa física
             'cpf' => [
                 'required',
                 'string',
@@ -37,12 +52,12 @@ class RegisterRequest extends FormRequest
             'birth_date' => [
                 'required',
                 'date',
-                'before' => now()->toDateString(), // apenas garante que é uma data passada
+                'before:today',
             ],
 
             'role' => ['sometimes', 'in:user,bar_owner'],
 
-            // Email opcional para user, obrigatório para bar_owner
+            // Email opcional para user
             'email' => [
                 'nullable',
                 'email',
@@ -51,7 +66,7 @@ class RegisterRequest extends FormRequest
             ],
         ];
 
-        // Email obrigatório apenas para bar_owner
+        // Email obrigatório para bar_owner — necessário para comunicação comercial
         if ($this->input('role') === 'bar_owner') {
             $rules['email'] = [
                 'required',
@@ -64,15 +79,28 @@ class RegisterRequest extends FormRequest
         return $rules;
     }
 
+    /**
+     * Mensagens de validação customizadas.
+     *
+     * @return array<string, string>
+     */
     public function messages(): array
     {
         return [
-        'cpf.size'   => 'O CPF deve ter 11 dígitos.',
-        'cpf.regex'  => 'O CPF deve conter apenas números.',
-        'cpf.unique' => 'Este CPF já está cadastrado.',
+            'cpf.size'         => 'O CPF deve ter 11 dígitos.',
+            'cpf.regex'        => 'O CPF deve conter apenas números.',
+            'cpf.unique'       => 'Este CPF já está cadastrado.',
+            'birth_date.before'=> 'A data de nascimento deve ser uma data passada.',
+            'phone.unique'     => 'Este telefone já está cadastrado.',
+            'email.unique'     => 'Este e-mail já está cadastrado.',
         ];
     }
 
+    /**
+     * Exemplos para a documentação do Scribe.
+     *
+     * @return array<string, mixed>
+     */
     public function bodyParameters(): array
     {
         return [
@@ -89,11 +117,11 @@ class RegisterRequest extends FormRequest
                 'example'     => '12345678901',
             ],
             'birth_date' => [
-                'description' => 'Data de nascimento (formato Y-m-d)',
+                'description' => 'Data de nascimento (formato Y-m-d).',
                 'example'     => '1990-05-15',
             ],
             'email' => [
-                'description' => 'Obrigatório apenas para bar_owner, opcional para user.',
+                'description' => 'Obrigatório para bar_owner, opcional para user.',
                 'example'     => 'joao@example.com',
             ],
             'role' => [

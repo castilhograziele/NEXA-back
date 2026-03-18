@@ -19,6 +19,7 @@ use App\Http\Controllers\EventPhotoController;
 use App\Http\Controllers\EventSubscriptionController;
 use App\Http\Controllers\MetricsController;
 use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\UserController;
 
 /**
  * Autenticação via OTP
@@ -50,6 +51,15 @@ Route::middleware(['auth:sanctum', 'throttle:api-auth'])->group(function () {
     /** Sessão do usuário autenticado */
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/me',           [AuthController::class, 'me']);
+
+    /** Perfil do usuário */
+    Route::get('/me/profile',                [UserController::class, 'profile']);
+    Route::put('/me/profile',                [UserController::class, 'updateProfile']);
+    Route::post('/me/photo',                 [UserController::class, 'uploadPhoto']);
+    Route::get('/me/history',                [UserController::class, 'eventHistory']);
+    Route::get('/me/recommendations',        [UserController::class, 'recommendedEvents']);
+    Route::put('/me/notifications',          [UserController::class, 'updateNotifications']);
+    Route::get('/me/category-preferences',   [UserController::class, 'categoryPreferences']);
 
     /** Dashboard consolidada do bar_owner */
     Route::get('/dashboard', [DashboardController::class, 'index']);

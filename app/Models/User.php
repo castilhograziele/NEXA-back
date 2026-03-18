@@ -9,7 +9,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Model do usuário.
+ *
+ * Representa tanto usuários comuns quanto bar_owners.
+ * A distinção entre os tipos é feita pelo sistema de roles do Spatie.
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
@@ -23,6 +30,10 @@ class User extends Authenticatable
         'password',
         'cpf',
         'birth_date',
+        'photo',
+        'city',
+        'notify_new_events',
+        'notify_event_reminder',
     ];
 
     protected $hidden = [
@@ -33,13 +44,27 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'birth_date'        => 'date',
+            'email_verified_at'      => 'datetime',
+            'password'               => 'hashed',
+            'birth_date'             => 'date',
+            'notify_new_events'      => 'boolean',
+            'notify_event_reminder'  => 'boolean',
         ];
     }
 
-    // Verifica se o usuário tem pelo menos 18 anos
+    /**
+     * Retorna a URL pública da foto de perfil do usuário.
+     *
+     * Retorna null se nenhuma foto estiver cadastrada.
+     */
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return $this->photo ? Storage::url($this->photo) : null;
+    }
+
+    /**
+     * Verifica se o usuário tem pelo menos 18 anos.
+     */
     public function isAdult(): bool
     {
         if (!$this->birth_date) {
@@ -49,13 +74,17 @@ class User extends Authenticatable
         return $this->birth_date->age >= 18;
     }
 
-    // Um usuário pode ter um bar
+    /**
+     * Um usuário pode ter um bar.
+     */
     public function bar(): HasOne
     {
         return $this->hasOne(Bar::class);
     }
 
-    // Eventos que o usuário se inscreveu
+    /**
+     * Eventos que o usuário se inscreveu.
+     */
     public function subscribedEvents(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'main.event_subscriptions')
