@@ -1,0 +1,298 @@
+name: Autenticação
+description: |-
+
+  Endpoints para registro, login e logout via OTP por SMS.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/register
+    metadata:
+      custom: []
+      groupName: Autenticação
+      groupDescription: |-
+
+        Endpoints para registro, login e logout via OTP por SMS.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Registrar usuário'
+      description: |-
+        Cria um novo usuário e envia código OTP por SMS.
+        O token de acesso só é retornado após verificar o código.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nome completo do usuário. Must not be greater than 255 characters.'
+        required: true
+        example: 'João Silva'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Telefone com DDI. Um SMS com código será enviado. Must match the regex /^\+?[1-9]\d{7,14}$/.'
+        required: true
+        example: '+5554999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      cpf:
+        custom: []
+        name: cpf
+        description: 'CPF do usuário, apenas números, 11 dígitos. Must match the regex /^\d{11}$/. Must be 11 characters.'
+        required: true
+        example: '12345678901'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      birth_date:
+        custom: []
+        name: birth_date
+        description: 'Data de nascimento (formato Y-m-d). Must be a valid date. Must be a date before <code>today</code>.'
+        required: true
+        example: '1990-05-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      role:
+        custom: []
+        name: role
+        description: 'Papel do usuário: user ou bar_owner.'
+        required: false
+        example: user
+        type: string
+        enumValues:
+          - user
+          - bar_owner
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Obrigatório para bar_owner, opcional para user. Must be a valid email address. Must not be greater than 255 characters.'
+        required: false
+        example: joao@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      name: 'João Silva'
+      phone: '+5554999999999'
+      cpf: '12345678901'
+      birth_date: '1990-05-15'
+      role: user
+      email: joao@example.com
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/login
+    metadata:
+      custom: []
+      groupName: Autenticação
+      groupDescription: |-
+
+        Endpoints para registro, login e logout via OTP por SMS.
+      subgroup: ''
+      subgroupDescription: ''
+      title: Login
+      description: |-
+        Solicita código OTP para o telefone informado.
+        O token de acesso só é retornado após verificar o código.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      phone:
+        custom: []
+        name: phone
+        description: 'Telefone cadastrado. Receberá um SMS com o código. Must match the regex /^\+?[1-9]\d{7,14}$/.'
+        required: true
+        example: '+5511999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      phone: '+5511999999999'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/verify-otp
+    metadata:
+      custom: []
+      groupName: Autenticação
+      groupDescription: |-
+
+        Endpoints para registro, login e logout via OTP por SMS.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Verificar OTP'
+      description: 'Valida o código recebido por SMS e retorna o token de acesso.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      phone:
+        custom: []
+        name: phone
+        description: 'Telefone que recebeu o código. Must match the regex /^\+?[1-9]\d{7,14}$/.'
+        required: true
+        example: '+5511999999999'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      code:
+        custom: []
+        name: code
+        description: 'Código de 6 dígitos recebido por SMS. Must be 6 digits.'
+        required: true
+        example: '123456'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      phone: '+5511999999999'
+      code: '123456'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/auth/logout
+    metadata:
+      custom: []
+      groupName: Autenticação
+      groupDescription: |-
+
+        Endpoints para registro, login e logout via OTP por SMS.
+      subgroup: ''
+      subgroupDescription: ''
+      title: Logout
+      description: 'Revoga todos os tokens do usuário autenticado.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me
+    metadata:
+      custom: []
+      groupName: Autenticação
+      groupDescription: |-
+
+        Endpoints para registro, login e logout via OTP por SMS.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Usuário autenticado'
+      description: 'Retorna os dados do usuário autenticado.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

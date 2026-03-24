@@ -1,0 +1,734 @@
+name: Events
+description: |-
+
+  Endpoints para listagem e gestão de eventos.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/events
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Listar eventos'
+      description: |-
+        Retorna a lista paginada de eventos ativos com filtros opcionais.
+        Use o filtro date com a data de hoje para obter os eventos "Esta noite".
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      category:
+        custom: []
+        name: category
+        description: 'Filtrar por categoria.'
+        required: false
+        example: samba
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      city:
+        custom: []
+        name: city
+        description: 'Filtrar por cidade do bar.'
+        required: false
+        example: 'Porto Alegre'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Filtrar por data (formato Y-m-d).'
+        required: false
+        example: '2026-04-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      category: samba
+      city: 'Porto Alegre'
+      date: '2026-04-15'
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"current_page":1,"data":[],"first_page_url":"http:\/\/localhost:8000\/api\/events?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events","per_page":10,"prev_page_url":null,"to":null,"total":0},"message":""}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/events/featured
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Eventos em destaque'
+      description: |-
+        Retorna eventos marcados como destaque por bares com plano premium.
+        Usado para a seção "Não pode perder".
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"current_page":1,"data":[],"first_page_url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events\/featured?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events\/featured","per_page":10,"prev_page_url":null,"to":null,"total":0},"message":""}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}'
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Detalhes do evento'
+      description: 'Retorna os dados de um evento e registra a visualização.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"bar_id":1,"title":"Show de Samba","description":null,"event_date":"2026-04-15","event_time":"21:00:00","category":"samba","is_active":true,"created_at":"2026-03-16T19:46:46.000000Z","updated_at":"2026-03-16T19:50:14.000000Z","is_featured":false,"spotify_url":null,"age_restriction":"18","benefit":null,"poster":null,"music_style":null,"bar":{"id":1,"user_id":1,"name":"Bar Teste","cnpj":"12345678000195","phone":null,"city":null,"address":null,"instagram":null,"description":null,"created_at":"2026-03-16T19:46:20.000000Z","updated_at":"2026-03-17T22:25:16.000000Z","plan":"premium","whatsapp":null,"razao_social":"Jos\u00e9 da Silva ME","photo":"bars\/profiles\/nkMiTxyjuKl7EZdrtgcZSsAVlpCV2lKW5GjjWGml.png"}},"message":""}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/events
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Criar evento'
+      description: |-
+        Cria um novo evento vinculado ao bar do usuário autenticado.
+        Apenas usuários com role bar_owner podem criar eventos.
+        Apenas bares com plano premium podem marcar is_featured como true.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: 'Título do evento. Must not be greater than 255 characters.'
+        required: true
+        example: 'Show de Samba ao Vivo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Descrição detalhada do evento.'
+        required: false
+        example: 'Uma noite incrível de samba ao vivo.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      event_date:
+        custom: []
+        name: event_date
+        description: 'Data do evento (formato Y-m-d). Must be a valid date. Must be a date after or equal to <code>today</code>.'
+        required: true
+        example: '2026-04-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event_time:
+        custom: []
+        name: event_time
+        description: 'Horário do evento (formato H:i). Must be a valid date in the format <code>H:i</code>.'
+        required: true
+        example: '21:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Categoria do evento. Must not be greater than 100 characters.'
+        required: true
+        example: samba
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_active:
+        custom: []
+        name: is_active
+        description: 'Define se o evento está ativo.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      age_restriction:
+        custom: []
+        name: age_restriction
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
+        required: false
+        example: none
+        type: string
+        enumValues:
+          - none
+          - '18'
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Show de Samba ao Vivo'
+      description: 'Uma noite incrível de samba ao vivo.'
+      event_date: '2026-04-15'
+      event_time: '21:00'
+      category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+      is_active: true
+      is_featured: false
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
+      age_restriction: none
+      benefit: '1 drink grátis na entrada'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/events/{event_id}'
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Atualizar evento'
+      description: |-
+        Atualiza os dados de um evento. Apenas o dono do bar pode editar.
+        Apenas bares com plano premium podem marcar is_featured como true.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: 'Título do evento. Must not be greater than 255 characters.'
+        required: false
+        example: 'Show de Samba ao Vivo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Descrição detalhada do evento.'
+        required: false
+        example: 'Uma noite incrível de samba ao vivo.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      event_date:
+        custom: []
+        name: event_date
+        description: 'Data do evento (formato Y-m-d). Must be a valid date. Must be a date after or equal to <code>today</code>.'
+        required: false
+        example: '2026-04-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event_time:
+        custom: []
+        name: event_time
+        description: 'Horário do evento (formato H:i). Must be a valid date in the format <code>H:i</code>.'
+        required: false
+        example: '21:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Categoria do evento. Must not be greater than 100 characters.'
+        required: false
+        example: samba
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_active:
+        custom: []
+        name: is_active
+        description: 'Define se o evento está ativo.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      age_restriction:
+        custom: []
+        name: age_restriction
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
+        required: false
+        example: none
+        type: string
+        enumValues:
+          - none
+          - '18'
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Show de Samba ao Vivo'
+      description: 'Uma noite incrível de samba ao vivo.'
+      event_date: '2026-04-15'
+      event_time: '21:00'
+      category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+      is_active: true
+      is_featured: false
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
+      age_restriction: none
+      benefit: '1 drink grátis na entrada'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/events/{event_id}'
+    metadata:
+      custom: []
+      groupName: Events
+      groupDescription: |-
+
+        Endpoints para listagem e gestão de eventos.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Desativar evento'
+      description: 'Desativa um evento sem deletá-lo do banco. Apenas o dono do bar pode desativar.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      title:
+        custom: []
+        name: title
+        description: 'Título do evento. Must not be greater than 255 characters.'
+        required: false
+        example: 'Show de Samba ao Vivo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'Descrição detalhada do evento.'
+        required: false
+        example: 'Uma noite incrível de samba ao vivo.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      event_date:
+        custom: []
+        name: event_date
+        description: 'Data do evento (formato Y-m-d). Must be a valid date. Must be a date after or equal to <code>today</code>.'
+        required: false
+        example: '2026-04-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event_time:
+        custom: []
+        name: event_time
+        description: 'Horário do evento (formato H:i). Must be a valid date in the format <code>H:i</code>.'
+        required: false
+        example: '21:00'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      category:
+        custom: []
+        name: category
+        description: 'Categoria do evento. Must not be greater than 100 characters.'
+        required: false
+        example: samba
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      music_style:
+        custom: []
+        name: music_style
+        description: 'O que vai tocar no evento. Texto livre. Must not be greater than 255 characters.'
+        required: false
+        example: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_active:
+        custom: []
+        name: is_active
+        description: 'Define se o evento está ativo.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      is_featured:
+        custom: []
+        name: is_featured
+        description: 'Define se o evento aparece em "Não pode perder". Apenas bares premium.'
+        required: false
+        example: false
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      spotify_url:
+        custom: []
+        name: spotify_url
+        description: 'Link da playlist do Spotify. Apenas bares premium. Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://open.spotify.com/playlist/exemplo'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      age_restriction:
+        custom: []
+        name: age_restriction
+        description: 'Classificação etária: none (livre) ou 18 (maiores de 18).'
+        required: false
+        example: none
+        type: string
+        enumValues:
+          - none
+          - '18'
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      benefit:
+        custom: []
+        name: benefit
+        description: 'Benefício oferecido ao usuário que fizer check-in. Must not be greater than 255 characters.'
+        required: false
+        example: '1 drink grátis na entrada'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      title: 'Show de Samba ao Vivo'
+      description: 'Uma noite incrível de samba ao vivo.'
+      event_date: '2026-04-15'
+      event_time: '21:00'
+      category: samba
+      music_style: 'Lady Gaga, Britney Spears, hits dos anos 2000'
+      is_active: true
+      is_featured: false
+      spotify_url: 'https://open.spotify.com/playlist/exemplo'
+      age_restriction: none
+      benefit: '1 drink grátis na entrada'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

@@ -1,0 +1,207 @@
+name: 'Avaliações de Eventos'
+description: |-
+
+  Endpoints para avaliação de eventos pelo usuário.
+  Apenas usuários que fizeram check-in podem avaliar.
+  Apenas após a data do evento.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/events/{event_id}/reviews'
+    metadata:
+      custom: []
+      groupName: 'Avaliações de Eventos'
+      groupDescription: |-
+
+        Endpoints para avaliação de eventos pelo usuário.
+        Apenas usuários que fizeram check-in podem avaliar.
+        Apenas após a data do evento.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Avaliações do evento'
+      description: |-
+        Retorna as avaliações de um evento com média das notas.
+        Endpoint público — qualquer visitante pode ver.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"averages":{"stars":0,"music_rating":0,"drink_rating":0,"cleanliness_rating":0,"total_reviews":0},"reviews":{"current_page":1,"data":[],"first_page_url":"http:\/\/localhost:8000\/api\/events\/1\/reviews?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/api\/events\/1\/reviews?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/api\/events\/1\/reviews?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/api\/events\/1\/reviews","per_page":10,"prev_page_url":null,"to":null,"total":0}},"message":""}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/events/{event_id}/reviews'
+    metadata:
+      custom: []
+      groupName: 'Avaliações de Eventos'
+      groupDescription: |-
+
+        Endpoints para avaliação de eventos pelo usuário.
+        Apenas usuários que fizeram check-in podem avaliar.
+        Apenas após a data do evento.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Avaliar evento'
+      description: |-
+        Cria uma avaliação para um evento.
+        Apenas usuários que fizeram check-in podem avaliar.
+        Apenas após a data do evento.
+        Não pode ser editada após enviada.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      event_id:
+        custom: []
+        name: event_id
+        description: 'The ID of the event.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      event:
+        custom: []
+        name: event
+        description: 'ID do evento.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      event_id: 1
+      event: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      stars:
+        custom: []
+        name: stars
+        description: 'Must be at least 1. Must not be greater than 5.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      music_rating:
+        custom: []
+        name: music_rating
+        description: 'Must be at least 1. Must not be greater than 5.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      drink_rating:
+        custom: []
+        name: drink_rating
+        description: 'Must be at least 1. Must not be greater than 5.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      cleanliness_rating:
+        custom: []
+        name: cleanliness_rating
+        description: 'Must be at least 1. Must not be greater than 5.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      comment:
+        custom: []
+        name: comment
+        description: 'Must not be greater than 200 characters.'
+        required: false
+        example: m
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      stars: 1
+      music_rating: 2
+      drink_rating: 2
+      cleanliness_rating: 1
+      comment: m
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

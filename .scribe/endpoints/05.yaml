@@ -1,0 +1,57 @@
+name: Dashboard
+description: |-
+
+  Endpoint consolidado da dashboard do bar_owner.
+  Retorna todos os dados necessários em uma única chamada.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/dashboard
+    metadata:
+      custom: []
+      groupName: Dashboard
+      groupDescription: |-
+
+        Endpoint consolidado da dashboard do bar_owner.
+        Retorna todos os dados necessários em uma única chamada.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Dashboard do bar_owner'
+      description: |-
+        Retorna em uma única chamada todos os dados da dashboard:
+        dados do bar, eventos ativos, métricas do mês e check-ins recentes.
+        Apenas bar_owners autenticados têm acesso.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-content-type-options: nosniff
+          x-frame-options: DENY
+          referrer-policy: no-referrer
+          permissions-policy: 'camera=(), microphone=(), geolocation=()'
+          access-control-allow-origin: 'http://localhost:3000'
+          access-control-allow-credentials: 'true'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

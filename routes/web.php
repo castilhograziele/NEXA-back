@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/bar/create', [BarController::class, 'create'])
-    ->middleware('auth');
+    ->middleware('auth');//
 
 
 

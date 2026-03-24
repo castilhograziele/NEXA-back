@@ -10,13 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Primeiro cria as roles, depois o usuário de teste
+        $this->call([
+            RoleSeeder::class,
+        ]);
 
+        // Usuário de teste (mantido do scaffold padrão do Laravel)
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
